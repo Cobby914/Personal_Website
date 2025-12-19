@@ -1,9 +1,12 @@
 "use client";
 
+import { useThemeStore } from "@/store/useThemeStore";
+
 export default function HomeClient() {
+  const theme = useThemeStore((s) => s.theme);  
   return (
-    <main className="p-8">
-      <h1 className="text-4xl font-bold">Colin Kwon</h1>
-    </main>
+    <div>
+        Home(theme: {theme})
+    </div>
   );
 }
