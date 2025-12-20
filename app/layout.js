@@ -1,6 +1,7 @@
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
+import {Button} from "@/components/ui";
 
 
 export default function RootLayout({ children }) {
@@ -8,9 +9,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ThemeProvider>
-          <Navbar />
           {children}
         </ThemeProvider>
+        <Navbar />
+        <Button>Test Button</Button>
       </body>
     </html>
   );
