@@ -1,18 +1,22 @@
+// app/layout.js
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
-import Navbar from "@/components/Navbar";
-import {Button} from "@/components/ui";
+import AppShell from "@/components/AppShell";
 
+export const metadata = {
+  title: "My App",
+  description: "Personal site",
+};
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider>
-          {children}
+          <AppShell>
+            {children}
+          </AppShell>
         </ThemeProvider>
-        <Navbar />
-        <Button>Test Button</Button>
       </body>
     </html>
   );

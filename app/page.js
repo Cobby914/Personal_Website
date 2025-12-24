@@ -1,5 +1,7 @@
-import HomeClient from "@/components/HomeClient";
-
 export default function Page() {
-  return <HomeClient />;
+  return (
+    <div className="bg-red-500 text-white p-10 text-2xl">
+      TAILWIND PROOF TEST
+    </div>
+  );
 }
