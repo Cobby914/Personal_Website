@@ -1,4 +1,3 @@
-// app/layout.js
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import AppShell from "@/components/AppShell";

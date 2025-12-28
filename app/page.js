@@ -1,7 +1,15 @@
-export default function Page() {
+import Navbar from "@/components/Navbar";
+import AppShell from "@/components/AppShell";
+
+export default function HomePage() {
   return (
-    <div className="bg-red-500 text-white p-10 text-2xl">
-      TAILWIND PROOF TEST
-    </div>
+    <AppShell backgroundImage="/images/background.jpg">
+      <Navbar />
+
+      <section className="px-8 py-24 text-white">
+        <h1 className="text-6xl font-bold">Welcome</h1>
+        <p>This page has a background image.</p>
+      </section>
+    </AppShell>
   );
 }

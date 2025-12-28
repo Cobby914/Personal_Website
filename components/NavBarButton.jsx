@@ -17,39 +17,43 @@ export function NavBarButton({
   return (
     <Comp
       className={clsx(
-        "relative inline-flex items-center justify-center font-medium transition-all",
+        "relative inline-flex items-center justify-center font-medium transition-all select-none",
 
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
         "disabled:pointer-events-none disabled:opacity-50",
 
-        // Shape
+        // 🔲 SHAPE (single source of truth)
         shape === "default" && "rounded-xl",
         shape === "rounded" && "rounded-full",
+        shape === "square" && "rounded-none",
 
-        // Variants
+        // 🎨 VARIANTS (no rounding here)
         variant === "nav" &&
           `
-          relative
-          bg-black/90 text-white
-          border border-white/15
-          rounded-xl
-          backdrop-blur-md
-          hover:border-white/40
-          hover:bg-black
-          transition-all
-          `,
+          bg-[#22222A] text-white
+          hover:bg-[#1F2238]
+          active:bg-[#171A26]
 
-        // CTA variant
-        variant === "cta" &&
+          `,
+        variant === "transparent" &&
           `
-          bg-orange-600 text-white
-          hover:bg-orange-500
-          rounded-xl
-          shadow-lg
+          bg-transparent text-white
+          border border-black
+          hover:bg-white/10
+          active:bg-white/20
+          px-4 py-2
           `,
 
-        // Sizes
-        size === "nav" && "h-20 w-36 text-base",
+        variant == "default" &&
+          `
+          bg-blue-600 text-white
+          hover:bg-blue-700
+          active:bg-blue-800
+          px-4 py-2
+          `,
+
+        // 📏 SIZES
+        size === "nav" && "h-20 min-w-30 px-8 text-lg",
         size === "cta" && "h-20 w-48 text-lg",
 
         className
