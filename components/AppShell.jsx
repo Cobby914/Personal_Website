@@ -3,18 +3,21 @@ export default function AppShell({
   children,
 }) {
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={
-          backgroundImage
-            ? { backgroundImage: `url(${backgroundImage})` }
-            : undefined
-        }
-      />
+    <main className="relative min-h-screen overflow-hidden bg-black">
+      {/* Image - centered with black surrounding it on all sides */}
+      {backgroundImage && (
+        <div className="absolute inset-0 flex items-center justify-center p-[min.5vw,.5vh)]">
+          <div
+            className="h-full w-full max-h-[min(130vh,150vw)] max-w-[min(130vh,150vw)] bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${backgroundImage})`,
+              backgroundSize: "contain",
+            }}
+          />
+        </div>
+      )}
 
-      {/* Gradient overlay for readability when using background image */}
+      {/* Gradient overlay for readability */}
       {backgroundImage && (
         <div
           className="absolute inset-0"
