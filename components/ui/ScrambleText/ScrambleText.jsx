@@ -13,11 +13,13 @@ export default function ScrambleText({
   // Start with final text so server and client match (avoids hydration error)
   const [displayText, setDisplayText] = useState(text ?? "");
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (!text || hasAnimated) return;
 
     const startTimeout = setTimeout(() => {
+      setIsVisible(true);
       let iteration = 0;
 
       const interval = setInterval(() => {
@@ -47,5 +49,12 @@ export default function ScrambleText({
     return () => clearTimeout(startTimeout);
   }, [text, delay, speed, hasAnimated]);
 
-  return <span className={className}>{displayText}</span>;
+  return (
+    <span
+      className={className}
+      style={{ opacity: isVisible ? 1 : 0, transition: "opacity 0.15s ease-out" }}
+    >
+      {displayText}
+    </span>
+  );
 }
