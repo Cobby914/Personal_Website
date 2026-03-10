@@ -51,3 +51,18 @@ body {
   animation: imageFadeIn 0.8s ease-out 3.8s forwards;
   opacity: 0;
 }
+
+/* Button fade-in */
+@keyframes buttonFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.btn-fade-in {
+  animation: buttonFadeIn 0.5s ease-out forwards;
+  opacity: 0;
+}

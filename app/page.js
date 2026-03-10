@@ -44,18 +44,20 @@ export default function HomePage() {
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/projects"
-            className="rounded-lg bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-lg transition hover:bg-gray-100"
+            className="btn-fade-in rounded-lg bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-lg transition hover:bg-gray-100"
+            style={{ animationDelay: "6.9s" }}
           >
-            <ScrambleText text="View Projects" delay={6900} speed={35} />
+            View Projects
           </Link>
           <Link
             href="/contact"
-            className="rounded-lg border-2 border-white px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
+            className="btn-fade-in rounded-lg border-2 border-white px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
             style={{
               textShadow: "0 1px 3px rgba(0,0,0,0.8)",
+              animationDelay: "7.5s",
             }}
           >
-            <ScrambleText text="Get in Touch" delay={7500} speed={35} />
+            Get in Touch
           </Link>
         </div>
       </section>
