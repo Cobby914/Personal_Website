@@ -14,9 +14,15 @@ export default function AppShell({
         }
       />
 
-      {/* Overlay for readability when using background image */}
+      {/* Gradient overlay for readability when using background image */}
       {backgroundImage && (
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.5) 100%)",
+          }}
+        />
       )}
 
       {/* Content */}
