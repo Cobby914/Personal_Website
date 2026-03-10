@@ -59,8 +59,8 @@ export function NavBarButton({
           `,
 
         // Sizes
-        size === "nav" && "h-25 min-w-36 text-lg",
-        size === "cta" && "h-25 w-48 text-lg",
+        size === "nav" && "h-24 min-w-36 text-lg",
+        size === "cta" && "h-24 w-48 text-lg",
 
         className
       )}
