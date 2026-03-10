@@ -22,7 +22,7 @@ export default function Footer() {
               <Link
                 key={href}
                 href={href}
-                className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="text-sm text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 {label}
               </Link>
@@ -30,7 +30,7 @@ export default function Footer() {
           </div>
 
           <div className="text-center sm:text-right">
-            <p className="text-sm text-gray-500 dark:text-gray-500">
+            <p className="text-sm text-gray-600 dark:text-gray-500">
               © {currentYear} Colin Kwon. All rights reserved.
             </p>
           </div>
