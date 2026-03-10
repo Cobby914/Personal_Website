@@ -11,3 +11,28 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
+
+/* Antique TV power-on sweep animation */
+@keyframes tvPowerOnSweep {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.tv-sweep-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  animation: tvPowerOnSweep 0.7s ease-out forwards;
+}

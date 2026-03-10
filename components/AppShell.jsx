@@ -1,3 +1,5 @@
+import AntiqueTVOverlay from "@/components/ui/AntiqueTV/AntiqueTVOverlay";
+
 export default function AppShell({
   backgroundImage,
   children,
@@ -7,23 +9,27 @@ export default function AppShell({
       {/* Image - centered with black surrounding it on all sides */}
       {backgroundImage && (
         <>
-          <div className="absolute inset-0 flex items-center justify-center p-[min(.5vw,.5h)]">
-            <div
-              className="h-full w-full max-h-[min(130vh,200vw)] max-w-[min(130vh,200vw)] bg-center bg-no-repeat"
-              style={{
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: "contain",
-              }}
-            />
+          <div className="absolute inset-0 flex items-center justify-center px-1.5 pt-8 pb-4 sm:px-2 sm:pt-12 sm:pb-6">
+            <div className="relative h-full w-full">
+              <div
+                className="absolute inset-0 bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: `url(${backgroundImage})`,
+                  backgroundSize: "contain",
+                }}
+              />
+              {/* Gradient overlay for readability (over image area) */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.5) 100%)",
+                }}
+              />
+              {/* Antique TV effect: power on -> static -> clear (only on image) */}
+              <AntiqueTVOverlay />
+            </div>
           </div>
-          {/* Gradient overlay for readability (over image area) */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.5) 100%)",
-            }}
-          />
         </>
       )}
 
