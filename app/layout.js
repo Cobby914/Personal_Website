@@ -1,10 +1,10 @@
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
-import AppShell from "@/components/AppShell";
+import Navbar from "@/components/Navbar";
 
 export const metadata = {
-  title: "My App",
-  description: "Personal site",
+  title: "Colin Kwon",
+  description: "Colin Kwon's personal portfolio website",
 };
 
 export default function RootLayout({ children }) {
@@ -12,9 +12,8 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider>
-          <AppShell>
-            {children}
-          </AppShell>
+          <Navbar />
+          {children}
         </ThemeProvider>
       </body>
     </html>
