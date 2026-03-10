@@ -8,7 +8,7 @@ export default function AppShell({
       {backgroundImage && (
         <div className="absolute inset-0 flex items-center justify-center p-[min.5vw,.5vh)]">
           <div
-            className="h-full w-full max-h-[min(130vh,150vw)] max-w-[min(130vh,150vw)] bg-center bg-no-repeat"
+            className="h-full w-full max-h-[min(130vh,180vw)] max-w-[min(130vh,180vw)] bg-center bg-no-repeat"
             style={{
               backgroundImage: `url(${backgroundImage})`,
               backgroundSize: "contain",
