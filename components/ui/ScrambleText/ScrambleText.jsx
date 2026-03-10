@@ -4,25 +4,18 @@ import { useState, useEffect } from "react";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-function getRandomText(str) {
-  return str
-    .split("")
-    .map((char) => (char === " " ? " " : CHARS[Math.floor(Math.random() * CHARS.length)]))
-    .join("");
-}
-
 export default function ScrambleText({
   text,
   className = "",
   delay = 0,
   speed = 50,
 }) {
-  const [displayText, setDisplayText] = useState(() =>
-    text ? getRandomText(text) : ""
-  );
+  // Start with final text so server and client match (avoids hydration error)
+  const [displayText, setDisplayText] = useState(text ?? "");
+  const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
-    if (!text) return;
+    if (!text || hasAnimated) return;
 
     const startTimeout = setTimeout(() => {
       let iteration = 0;
@@ -44,6 +37,7 @@ export default function ScrambleText({
         if (iteration >= text.length) {
           clearInterval(interval);
           setDisplayText(text);
+          setHasAnimated(true);
         }
       }, speed);
 
@@ -51,7 +45,7 @@ export default function ScrambleText({
     }, delay);
 
     return () => clearTimeout(startTimeout);
-  }, [text, delay, speed]);
+  }, [text, delay, speed, hasAnimated]);
 
   return <span className={className}>{displayText}</span>;
 }
