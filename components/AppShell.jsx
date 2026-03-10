@@ -21,10 +21,10 @@ export default function AppShell({
               {/* Gradient overlay for readability (over image area) */}
               <div
                 className="image-fade-in absolute inset-0 pointer-events-none"
-                style={{
-                  background:
-                    "linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.5) 100%)",
-                }}
+              style={{
+                background:
+                  "linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.6) 100%)",
+              }}
               />
               {/* Antique TV effect: power on -> static -> clear (only on image) */}
               <AntiqueTVOverlay />
