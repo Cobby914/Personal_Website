@@ -1,5 +1,4 @@
 "use client";
-
 import { Slot } from "@radix-ui/react-slot";
 import clsx from "clsx";
 import React from "react";
@@ -17,44 +16,51 @@ export function NavBarButton({
   return (
     <Comp
       className={clsx(
-        "relative inline-flex items-center justify-center font-medium transition-all select-none",
+        // ❗ NO alignment here
+        "relative inline-flex font-medium transition-all select-none",
 
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2",
         "disabled:pointer-events-none disabled:opacity-50",
 
-        // 🔲 SHAPE (single source of truth)
+        // Shape
         shape === "default" && "rounded-xl",
         shape === "rounded" && "rounded-full",
         shape === "square" && "rounded-none",
 
-        // 🎨 VARIANTS (no rounding here)
+        // NAV VARIANT
         variant === "nav" &&
           `
-          bg-[#22222A] text-white
-          hover:bg-[#1F2238]
-          active:bg-[#171A26]
+          h-20 w-36
+          flex flex-col
+          items-start
+          p-4
 
-          `,
-        variant === "transparent" &&
-          `
-          bg-transparent text-white
-          border border-black
-          hover:bg-white/10
-          active:bg-white/20
-          px-4 py-2
+        bg-black/40
+        text-white/85
+          border border-white/25
+          backdrop-blur-md
+
+        hover:bg-black/55
+        hover:border-white/45
+        hover:text-white
+
+
+          transition-all
+          hover:scale-[1.06]
           `,
 
-        variant == "default" &&
+        variant === "default" &&
           `
+          inline-flex items-center justify-center
           bg-blue-600 text-white
           hover:bg-blue-700
           active:bg-blue-800
           px-4 py-2
           `,
 
-        // 📏 SIZES
-        size === "nav" && "h-20 min-w-30 px-8 text-lg",
-        size === "cta" && "h-20 w-48 text-lg",
+        // Sizes
+        size === "nav" && "h-25 min-w-36 text-lg",
+        size === "cta" && "h-25 w-48 text-lg",
 
         className
       )}
