@@ -36,3 +36,18 @@ body {
   right: 0;
   animation: tvPowerOnSweep 0.7s ease-out forwards;
 }
+
+/* Image section fade-in (syncs with TV static clear) */
+@keyframes imageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.image-fade-in {
+  animation: imageFadeIn 0.8s ease-out 3.8s forwards;
+  opacity: 0;
+}
