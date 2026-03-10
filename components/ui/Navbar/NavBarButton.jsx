@@ -27,26 +27,36 @@ export function NavBarButton({
         shape === "rounded" && "rounded-full",
         shape === "square" && "rounded-none",
 
-        // NAV VARIANT
+        // NAV VARIANT - compact pill-style links
         variant === "nav" &&
           `
-          h-20 w-36
-          flex flex-col
-          items-start
-          p-4
+          inline-flex items-center justify-center
+          px-4 py-2 rounded-full
+          text-sm font-medium
 
-        bg-black/40
-        text-white/85
-          border border-white/25
+          bg-black/30 dark:bg-white/10
+          text-white/90 dark:text-white/90
+          border border-white/20 dark:border-white/20
           backdrop-blur-md
 
-        hover:bg-black/55
-        hover:border-white/45
-        hover:text-white
+          hover:bg-black/50 dark:hover:bg-white/20
+          hover:border-white/40 dark:hover:border-white/40
+          hover:text-white
+          transition-all duration-200
+          `,
 
+        // NAV ACTIVE - highlighted current page
+        variant === "nav-active" &&
+          `
+          inline-flex items-center justify-center
+          px-4 py-2 rounded-full
+          text-sm font-medium
 
-          transition-all
-          hover:scale-[1.06]
+          bg-white/25 dark:bg-white/25
+          text-white
+          border border-white/40 dark:border-white/40
+          backdrop-blur-md
+          transition-all duration-200
           `,
 
         variant === "default" &&
@@ -59,7 +69,7 @@ export function NavBarButton({
           `,
 
         // Sizes
-        size === "nav" && "h-24 min-w-36 text-lg",
+        size === "nav" && "text-sm",
         size === "cta" && "h-24 w-48 text-lg",
 
         className

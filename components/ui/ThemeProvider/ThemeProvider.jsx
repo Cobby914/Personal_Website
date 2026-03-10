@@ -5,6 +5,11 @@ import { useThemeStore } from "@/store/useThemeStore";
 
 export default function ThemeProvider({ children }) {
   const theme = useThemeStore((state) => state.theme);
+  const hydrate = useThemeStore((state) => state.hydrate);
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
 
   useEffect(() => {
     const root = document.documentElement;
