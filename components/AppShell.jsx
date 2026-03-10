@@ -1,6 +1,5 @@
 export default function AppShell({
   backgroundImage,
-  // overlay = "bg-black/50",
   children,
 }) {
   return (
