@@ -9,10 +9,10 @@ export default function HomePage() {
           Colin Kwon
         </h1>
         <p className="mt-4 max-w-2xl text-lg text-white/90 sm:text-xl md:text-2xl">
-          Software developer building things for the web
+          Software and AI developer building things for the web.
         </p>
         <p className="mt-4 max-w-xl text-base text-white/80 sm:text-lg">
-          Welcome to my portfolio. Explore my projects, learn about my background,
+          Welcome to my portfolio website. Explore my projects, learn about my background,
           and get in touch.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
