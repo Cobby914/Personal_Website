@@ -13,7 +13,7 @@ export default function HomePage() {
               "0 2px 4px rgba(0,0,0,0.8), 0 4px 12px rgba(0,0,0,0.6), 0 0 40px rgba(0,0,0,0.4)",
           }}
         >
-          <ScrambleText text="Colin Kwon" delay={4000} speed={40} />
+          <ScrambleText text="Colin Kwon" delay={2200} speed={40} />
         </h1>
         <p
           className="mt-4 max-w-2xl text-lg text-white sm:text-xl md:text-2xl"
@@ -24,7 +24,7 @@ export default function HomePage() {
         >
           <ScrambleText
             text="Software and AI developer building things for the web."
-            delay={4900}
+            delay={3100}
             speed={25}
           />
         </p>
@@ -37,7 +37,7 @@ export default function HomePage() {
         >
           <ScrambleText
             text="Welcome to my portfolio website. Explore my projects, learn about my background, and get in touch."
-            delay={5900}
+            delay={4100}
             speed={20}
           />
         </p>
@@ -45,7 +45,7 @@ export default function HomePage() {
           <Link
             href="/projects"
             className="btn-fade-in rounded-lg bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-lg transition hover:bg-gray-100"
-            style={{ animationDelay: "6.9s" }}
+            style={{ animationDelay: "5.1s" }}
           >
             View Projects
           </Link>
@@ -54,7 +54,7 @@ export default function HomePage() {
             className="btn-fade-in rounded-lg border-2 border-white px-6 py-3 text-sm font-semibold text-white transition hover:border-white hover:bg-white/10"
             style={{
               textShadow: "0 1px 3px rgba(0,0,0,0.8)",
-              animationDelay: "7.5s",
+              animationDelay: "5.7s",
             }}
           >
             Get in Touch

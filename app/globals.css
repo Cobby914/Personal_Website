@@ -48,7 +48,7 @@ body {
 }
 
 .image-fade-in {
-  animation: imageFadeIn 0.8s ease-out 3.8s forwards;
+  animation: imageFadeIn 0.8s ease-out 1.4s forwards;
   opacity: 0;
 }
 
