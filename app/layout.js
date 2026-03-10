@@ -10,11 +10,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+    <html lang="en" suppressHydrationWarning className="w-full">
+      <body className="min-h-screen w-full flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
         <ThemeProvider>
           <Navbar />
-          <div className="flex-1">{children}</div>
+          <div className="flex-1 w-full min-w-0">{children}</div>
           <Footer />
         </ThemeProvider>
       </body>
