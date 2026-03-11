@@ -51,7 +51,7 @@ export default function AboutPageContent() {
         className="relative w-full px-6 pt-16 pb-20 sm:px-8 sm:pt-20 md:pb-24 md:pt-24"
       >
         <div className="mx-auto max-w-5xl">
-          <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-12">
+          <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-12">
             <AnimateOnScroll stagger={0} as="div" className="flex-shrink-0">
               <div className="mx-auto w-full max-w-[280px] overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-xl md:mx-0">
                 <img
