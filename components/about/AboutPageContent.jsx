@@ -1,95 +1,100 @@
 "use client";
 
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
+import ExperienceTimeline from "./ExperienceTimeline";
 
-// Placeholder images - replace with real paths when available
-const PLACEHOLDER_IMAGES = {
-  profile: "https://placehold.co/400x500/1a1a2e/4a5568?text=Photo",
-  snapshot1: "https://placehold.co/200x200/1a1a2e/4a5568?text=1",
-  snapshot2: "https://placehold.co/200x200/1a1a2e/4a5568?text=2",
-  snapshot3: "https://placehold.co/200x200/1a1a2e/4a5568?text=3",
-};
+// Placeholder image for landing - replace with real path when available
+const LANDING_IMAGE = "https://placehold.co/320x400/1a1a2e/4a5568?text=Photo";
 
 const textShadow = "0 1px 3px rgba(0,0,0,0.8)";
 const textShadowSoft = "0 1px 2px rgba(0,0,0,0.6)";
 
 export default function AboutPageContent() {
   return (
-    <section className="relative w-full px-6 py-20 sm:px-8 md:py-24">
-      <div className="mx-auto max-w-5xl">
+    <>
+      {/* Section 1: Landing */}
+      <section
+        id="about-landing"
+        className="relative flex min-h-[70vh] flex-col items-center justify-center px-6 py-24 text-center sm:px-8"
+      >
         <AnimateOnScroll>
-          <h1
-            className="mb-12 text-3xl font-bold text-white sm:text-4xl"
-            style={{ textShadow }}
-          >
-            About Me
-          </h1>
-
-          {/* Main content: image + text */}
-          <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-12">
-            {/* Profile image placeholder */}
-            <AnimateOnScroll stagger={80} as="div" className="flex-shrink-0">
-              <div className="mx-auto w-full max-w-[320px] overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-lg md:mx-0 md:max-w-[280px]">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-8 flex justify-center">
+              <div className="overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-xl">
                 <img
-                  src={PLACEHOLDER_IMAGES.profile}
+                  src={LANDING_IMAGE}
                   alt="Profile"
-                  className="aspect-[4/5] w-full object-cover"
+                  className="aspect-[4/5] w-[200px] object-cover sm:w-[240px] md:w-[280px]"
                 />
               </div>
-            </AnimateOnScroll>
+            </div>
+            <h1
+              className="text-3xl font-bold text-white sm:text-4xl md:text-5xl"
+              style={{ textShadow }}
+            >
+              About Me
+            </h1>
+            <p
+              className="mt-4 max-w-2xl mx-auto text-lg text-white/90 sm:text-xl"
+              style={{ textShadow: textShadowSoft }}
+            >
+              Software and AI developer building things for the web.
+            </p>
+          </div>
+        </AnimateOnScroll>
+      </section>
 
-            {/* Bio text */}
-            <AnimateOnScroll stagger={160} as="div" className="flex-1">
-              <p
-                className="text-lg leading-relaxed text-white/90 sm:text-xl"
-                style={{ textShadow: textShadowSoft }}
-              >
+      {/* Section 2: Who I am */}
+      <section
+        id="about-who-i-am"
+        className="relative w-full px-6 py-20 sm:px-8 md:py-24"
+      >
+        <div className="mx-auto max-w-3xl">
+          <AnimateOnScroll>
+            <h2
+              className="mb-8 text-2xl font-bold text-white sm:text-3xl"
+              style={{ textShadow }}
+            >
+              Who I Am
+            </h2>
+            <div
+              className="space-y-4 text-lg leading-relaxed text-white/90 sm:text-xl"
+              style={{ textShadow: textShadowSoft }}
+            >
+              <p>
                 I&apos;m a software developer focused on AI and web development.
                 I build tools and applications that solve real problems and
                 delight users. I&apos;m always open to new opportunities—whether
                 that&apos;s a full-time role, collaboration on interesting
                 projects, or just connecting with fellow developers.
               </p>
-              <p
-                className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg"
-                style={{ textShadow: textShadowSoft }}
-              >
+              <p>
                 When I&apos;m not coding, you can find me exploring new
                 technologies, contributing to open source, or enjoying the great
                 outdoors.
               </p>
-            </AnimateOnScroll>
-          </div>
-
-          {/* Snapshot grid */}
-          <AnimateOnScroll stagger={240} as="div" className="mt-12">
-            <p
-              className="mb-4 text-sm font-medium text-white/70"
-              style={{ textShadow: textShadowSoft }}
-            >
-              A few snapshots
-            </p>
-            <div className="flex flex-wrap gap-4">
-              {[
-                PLACEHOLDER_IMAGES.snapshot1,
-                PLACEHOLDER_IMAGES.snapshot2,
-                PLACEHOLDER_IMAGES.snapshot3,
-              ].map((src, i) => (
-                <div
-                  key={i}
-                  className="overflow-hidden rounded-lg border border-white/10 bg-white/5 transition hover:border-white/20"
-                >
-                  <img
-                    src={src}
-                    alt={`Snapshot ${i + 1}`}
-                    className="aspect-square w-[120px] object-cover sm:w-[140px]"
-                  />
-                </div>
-              ))}
             </div>
           </AnimateOnScroll>
-        </AnimateOnScroll>
-      </div>
-    </section>
+        </div>
+      </section>
+
+      {/* Section 3: Experience timeline */}
+      <section
+        id="about-experience"
+        className="relative w-full px-6 py-20 sm:px-8 md:py-24"
+      >
+        <div className="mx-auto max-w-3xl">
+          <AnimateOnScroll>
+            <h2
+              className="mb-12 text-2xl font-bold text-white sm:text-3xl"
+              style={{ textShadow }}
+            >
+              Experience
+            </h2>
+            <ExperienceTimeline />
+          </AnimateOnScroll>
+        </div>
+      </section>
+    </>
   );
 }
