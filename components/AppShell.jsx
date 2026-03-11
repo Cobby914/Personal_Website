@@ -5,11 +5,11 @@ export default function AppShell({
   children,
 }) {
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-black">
+    <main className="relative min-h-screen w-full overflow-x-hidden bg-black">
       {/* Image - centered with black surrounding it on all sides */}
       {backgroundImage && (
         <>
-          <div className="absolute inset-0 flex items-center justify-center px-1.5 pt-8 pb-4 sm:px-2 sm:pt-12 sm:pb-6">
+          <div className="absolute top-0 left-0 right-0 h-screen flex items-center justify-center px-1.5 pt-8 pb-4 sm:px-2 sm:pt-12 sm:pb-6">
             <div className="relative h-full w-full">
               <div
                 className="image-fade-in absolute inset-0 bg-center bg-no-repeat"

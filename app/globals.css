@@ -66,3 +66,26 @@ body {
   animation: buttonFadeIn 0.5s ease-out forwards;
   opacity: 0;
 }
+
+/* Scroll cue subtle bounce */
+@keyframes scrollCueBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+.scroll-cue svg {
+  animation: scrollCueBounce 2s ease-in-out infinite;
+}
+
+/* Hide scrollbar for carousel */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
