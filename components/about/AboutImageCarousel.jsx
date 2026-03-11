@@ -70,26 +70,32 @@ function getWrappedIndex(index, length) {
   return (index + length) % length;
 }
 
+const CARD_WIDTH = 240;
+const CARD_GAP = 20;
+
 export default function AboutImageCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [missingImages, setMissingImages] = useState({});
   const [isPaused, setIsPaused] = useState(false);
-
-  const prevIndex = getWrappedIndex(activeIndex - 1, ABOUT_CAROUSEL_IMAGES.length);
-  const nextIndex = getWrappedIndex(activeIndex + 1, ABOUT_CAROUSEL_IMAGES.length);
-  const activeSlide = ABOUT_CAROUSEL_IMAGES[activeIndex];
-  const prevSlide = ABOUT_CAROUSEL_IMAGES[prevIndex];
-  const nextSlide = ABOUT_CAROUSEL_IMAGES[nextIndex];
+  const [expandedSlide, setExpandedSlide] = useState(null);
+  const trackOffset = activeIndex * (CARD_WIDTH + CARD_GAP);
 
   function markAsMissing(src) {
     setMissingImages((prev) => ({ ...prev, [src]: true }));
   }
 
-  function renderPolaroid(slide, cardClassName = "") {
+  function renderPolaroid(slide, isActive) {
     const isMissing = Boolean(missingImages[slide.src]);
+    const canExpand = !isMissing;
+
     return (
-      <div
-        className={`flex h-full w-full items-center justify-center rounded-sm bg-white p-3 pb-10 shadow-2xl sm:p-4 sm:pb-12 ${cardClassName}`}
+      <button
+        type="button"
+        onClick={() => canExpand && setExpandedSlide(slide)}
+        disabled={!canExpand}
+        className={`relative flex h-[300px] w-[240px] flex-shrink-0 items-center justify-center rounded-sm bg-white p-3 pb-10 shadow-2xl transition-all duration-500 ease-out hover:z-30 hover:-translate-y-2 hover:scale-[1.03] hover:shadow-[0_28px_60px_rgba(0,0,0,0.4)] sm:h-[320px] sm:p-4 sm:pb-12 ${
+          isActive ? "z-20 -translate-y-1 scale-105 opacity-100" : "z-10 scale-95 opacity-70"
+        } ${canExpand ? "cursor-zoom-in" : "cursor-default"} disabled:opacity-100`}
       >
         {isMissing ? (
           <div className="flex h-full w-full flex-col items-center justify-center border border-gray-200 bg-gray-100 px-8 text-center">
@@ -104,7 +110,7 @@ export default function AboutImageCarousel() {
             onError={() => markAsMissing(slide.src)}
           />
         )}
-      </div>
+      </button>
     );
   }
 
@@ -113,7 +119,7 @@ export default function AboutImageCarousel() {
   }
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || expandedSlide) return;
 
     const intervalId = setInterval(() => {
       setActiveIndex((current) =>
@@ -122,7 +128,20 @@ export default function AboutImageCarousel() {
     }, 3500);
 
     return () => clearInterval(intervalId);
-  }, [isPaused]);
+  }, [isPaused, expandedSlide]);
+
+  useEffect(() => {
+    if (!expandedSlide) return undefined;
+
+    function handleEscClose(event) {
+      if (event.key === "Escape") {
+        setExpandedSlide(null);
+      }
+    }
+
+    window.addEventListener("keydown", handleEscClose);
+    return () => window.removeEventListener("keydown", handleEscClose);
+  }, [expandedSlide]);
 
   return (
     <section className="relative w-full px-6 pb-20 sm:px-8 md:pb-24">
@@ -134,16 +153,19 @@ export default function AboutImageCarousel() {
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            <div className="aspect-[4/3] w-full px-4 py-6 sm:px-8 sm:py-8">
-              <div className="relative mx-auto h-full w-full max-w-[760px]">
-                <div className="absolute left-1 top-1/2 z-10 h-[90%] w-[44%] -translate-y-1/2 -rotate-6 opacity-70 sm:left-3">
-                  {renderPolaroid(prevSlide)}
-                </div>
-                <div className="absolute right-1 top-1/2 z-10 h-[90%] w-[44%] -translate-y-1/2 rotate-6 opacity-70 sm:right-3">
-                  {renderPolaroid(nextSlide)}
-                </div>
-                <div className="absolute left-1/2 top-1/2 z-20 h-full w-[62%] -translate-x-1/2 -translate-y-1/2">
-                  {renderPolaroid(activeSlide, "ring-1 ring-black/5")}
+            <div className="w-full px-4 py-6 sm:px-8 sm:py-8">
+              <div className="overflow-hidden">
+                <div
+                  className="flex items-end gap-5 transition-transform duration-700 ease-out"
+                  style={{
+                    transform: `translateX(calc(50% - ${CARD_WIDTH / 2}px - ${trackOffset}px))`,
+                  }}
+                >
+                  {ABOUT_CAROUSEL_IMAGES.map((slide, index) => (
+                    <div key={slide.src} className={index === activeIndex ? "photo-pickup-drop" : ""}>
+                      {renderPolaroid(slide, index === activeIndex)}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -183,9 +205,33 @@ export default function AboutImageCarousel() {
             })}
           </div>
 
-          <p className="mt-4 text-center text-sm text-white/70">
-            Carousel loads images from `public/images/about-carousel/`.
-          </p>
+          {expandedSlide && (
+            <div
+              className="fixed inset-0 z-[80] flex items-center justify-center bg-black/85 p-4"
+              onClick={() => setExpandedSlide(null)}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Expanded photo"
+            >
+              <div
+                className="relative w-full max-w-5xl rounded-xl bg-white p-3 shadow-2xl sm:p-4"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  onClick={() => setExpandedSlide(null)}
+                  className="absolute right-3 top-3 rounded-md bg-black/70 px-2.5 py-1 text-xs font-semibold text-white transition hover:bg-black"
+                >
+                  Close
+                </button>
+                <img
+                  src={expandedSlide.src}
+                  alt={expandedSlide.alt}
+                  className="max-h-[85vh] w-full rounded-md bg-gray-100 object-contain"
+                />
+              </div>
+            </div>
+          )}
         </AnimateOnScroll>
       </div>
     </section>
