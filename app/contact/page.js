@@ -38,10 +38,12 @@ const RESUMES = [
   {
     label: "Software Engineering Resume",
     href: "/resumes/Colin_s_SWE_Resume.pdf",
+    previewTitle: "SWE Resume Preview",
   },
   {
     label: "AI Resume",
     href: "/resumes/Colin_s_AI_Resume.pdf",
+    previewTitle: "AI Resume Preview",
   },
 ];
 
@@ -76,16 +78,31 @@ export default function ContactPage() {
             </h2>
             <div className="mt-4 flex flex-wrap gap-3">
               {RESUMES.map((resume) => (
-                <a
-                  key={resume.href}
-                  href={resume.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-lg border-2 border-white px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
-                  download
-                >
-                  {resume.label}
-                </a>
+                <div key={resume.href} className="relative group">
+                  <a
+                    href={resume.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-lg border-2 border-white px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition duration-200 hover:-translate-y-1 hover:scale-[1.03] hover:bg-white/10 hover:shadow-2xl"
+                    download
+                  >
+                    {resume.label}
+                  </a>
+
+                  {/* Desktop hover preview */}
+                  <div className="pointer-events-none invisible absolute bottom-full left-1/2 z-50 mb-3 hidden w-[320px] -translate-x-1/2 translate-y-2 scale-95 rounded-xl border border-white/20 bg-black/90 p-2 opacity-0 shadow-2xl transition-all duration-250 ease-out group-hover:visible group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 md:block">
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/80">
+                      {resume.previewTitle}
+                    </p>
+                    <div className="h-[420px] overflow-hidden rounded-md border border-white/15 bg-white">
+                      <iframe
+                        src={`${resume.href}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                        title={resume.previewTitle}
+                        className="h-full w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>

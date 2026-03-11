@@ -27,7 +27,7 @@ export default function ContactMethods({ methods }) {
               key={item.label}
               type="button"
               onClick={() => handleCopyEmail(item.value)}
-              className="rounded-xl border border-white/20 bg-white/10 p-4 text-left transition hover:border-white/40 hover:bg-white/15"
+              className="rounded-xl border border-white/20 bg-white/10 p-4 text-left shadow-lg transition duration-200 hover:-translate-y-1 hover:scale-[1.02] hover:border-white/40 hover:bg-white/15 hover:shadow-2xl"
             >
               <p className="text-sm font-semibold uppercase tracking-wide text-white/80">
                 {item.label}
@@ -48,7 +48,7 @@ export default function ContactMethods({ methods }) {
             href={item.href}
             target="_blank"
             rel="noreferrer"
-            className="rounded-xl border border-white/20 bg-white/10 p-4 transition hover:border-white/40 hover:bg-white/15"
+            className="rounded-xl border border-white/20 bg-white/10 p-4 shadow-lg transition duration-200 hover:-translate-y-1 hover:scale-[1.02] hover:border-white/40 hover:bg-white/15 hover:shadow-2xl"
           >
             <p className="text-sm font-semibold uppercase tracking-wide text-white/80">
               {item.label}
