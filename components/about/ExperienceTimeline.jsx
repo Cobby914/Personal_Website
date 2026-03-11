@@ -32,53 +32,66 @@ const textShadowSoft = "0 1px 2px rgba(0,0,0,0.6)";
 export default function ExperienceTimeline() {
   return (
     <div className="relative">
-      {/* Vertical line */}
+      {/* Vertical line - centered */}
       <div
-        className="absolute left-3 top-0 bottom-0 w-px bg-white/20 sm:left-4"
+        className="absolute left-1/2 top-0 bottom-0 w-1 -translate-x-1/2 bg-white/25"
         aria-hidden
       />
 
       <div className="space-y-0">
-        {TIMELINE_ENTRIES.map((entry, i) => (
-          <AnimateOnScroll key={entry.id} stagger={i * 60} as="div">
-            <div className="relative flex gap-6 pb-12 last:pb-0">
-              {/* Timeline dot */}
-              <div className="relative z-10 flex h-6 w-6 flex-shrink-0 items-center justify-center sm:h-8 sm:w-8">
-                <div className="h-3 w-3 rounded-full border-2 border-white/40 bg-white/10 sm:h-4 sm:w-4" />
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 pt-0.5">
-                <span
-                  className="text-sm font-semibold text-white/70"
-                  style={{ textShadow: textShadowSoft }}
-                >
-                  {entry.year}
-                </span>
-                <h3
-                  className="mt-1 text-lg font-semibold text-white sm:text-xl"
-                  style={{ textShadow: textShadowSoft }}
-                >
-                  {entry.title}
-                </h3>
+        {TIMELINE_ENTRIES.map((entry, i) => {
+          const isRight = i % 2 === 0;
+          const content = (
+            <>
+              <span
+                className="text-lg font-semibold text-white/70 md:text-xl"
+                style={{ textShadow: textShadowSoft }}
+              >
+                {entry.year}
+              </span>
+              <h3
+                className="mt-2 text-xl font-semibold text-white md:text-2xl lg:text-3xl"
+                style={{ textShadow: textShadowSoft }}
+              >
+                {entry.title}
+              </h3>
+              <p
+                className="mt-3 text-base leading-relaxed text-white/80 md:text-lg lg:text-xl"
+                style={{ textShadow: textShadowSoft }}
+              >
+                {entry.description}
+              </p>
+              {entry.location && (
                 <p
-                  className="mt-2 text-base leading-relaxed text-white/80 sm:text-lg"
+                  className="mt-2 text-base text-white/60 md:text-lg"
                   style={{ textShadow: textShadowSoft }}
                 >
-                  {entry.description}
+                  {entry.location}
                 </p>
-                {entry.location && (
-                  <p
-                    className="mt-1 text-sm text-white/60"
-                    style={{ textShadow: textShadowSoft }}
-                  >
-                    {entry.location}
-                  </p>
-                )}
+              )}
+            </>
+          );
+          return (
+            <AnimateOnScroll key={entry.id} stagger={i * 80} as="div">
+              <div className="relative flex min-h-[180px] items-center py-8 md:min-h-[220px] md:py-12">
+                {/* Left content (odd index) */}
+                <div className="flex w-1/2 flex-col pr-8 text-right md:pr-16">
+                  {!isRight && <div className="inline-flex flex-col items-end">{content}</div>}
+                </div>
+
+                {/* Center: Timeline dot */}
+                <div className="relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center md:h-16 md:w-16 lg:h-20 lg:w-20">
+                  <div className="h-4 w-4 rounded-full border-2 border-white/50 bg-white/20 md:h-5 md:w-5 lg:h-6 lg:w-6" />
+                </div>
+
+                {/* Right content (even index) */}
+                <div className="flex w-1/2 flex-col pl-8 text-left md:pl-16">
+                  {isRight && <div className="inline-flex flex-col items-start">{content}</div>}
+                </div>
               </div>
-            </div>
-          </AnimateOnScroll>
-        ))}
+            </AnimateOnScroll>
+          );
+        })}
       </div>
     </div>
   );

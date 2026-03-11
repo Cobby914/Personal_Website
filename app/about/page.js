@@ -1,5 +1,10 @@
+import dynamic from "next/dynamic";
 import AppShell from "@/components/AppShell";
-import AboutPageContent from "@/components/about/AboutPageContent";
+
+const AboutPageContent = dynamic(
+  () => import("@/components/about/AboutPageContent"),
+  { ssr: true }
+);
 
 export const metadata = {
   title: "About | Colin Kwon",
@@ -8,7 +13,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <AppShell backgroundImage="/images/background.jpg">
+    <AppShell backgroundImage="/images/about-background.png">
       <AboutPageContent />
     </AppShell>
   );
