@@ -10,8 +10,8 @@ const TIMELINE_ENTRIES = [
     id: "0",
     date: "Sep 2023",
     title: "Arriving to UCI",
-    summary: "",
-    details: "",
+    summary: "ZOT ZOT ZOT!",
+    details: "Arriving into a new environment, I was able to meet new people and learn new things. Meeting my fellow friends and peers, I begin to build a strong network of people who I can rely on and learn from. These are the people who I hope to be one day.",
     location: "UC Irvine · Irvine, CA",
   },
   {
@@ -19,17 +19,15 @@ const TIMELINE_ENTRIES = [
     date: "Aug 2024",
     title: "Software Engineer Intern",
     summary: "Built mortgage lending tools and dashboards at M.K Lending.",
-    details:
-      "Built a loan-lookup REST API using TypeScript and Node.js, reducing calculations by 4 hours per day. Created a rate-sheet ingestion pipeline with Python, pandas, and PostgreSQL, saving 3 hours of processing. Developed a dashboard tracking employee loans using React and TypeScript for 5+ managers.",
+    details: "Landing my first internship, I was able to learn from the best and build tools that helped the company grow. Working with a team, I was tasked to help develop a loan-lookup REST API using TypeScript and Node.js. Continuing my internship with this company, I then built a rate-sheet ingestion pipeline with Python, pandas, and PostgresSQL. Finally, I implemented a dashboard tracking employee loans using React and TypeScript as my last project. This was a great experience for me to learn and develop my skills as a developer.",
     location: "M.K Lending · Brea, CA",
   },
   {
     id: "2",
     date: "Sep 2024",
     title: "Software Engineer",
-    summary: "Full-stack volunteer tracking dashboard at Commit the Change.",
-    details:
-      "Developed a full-stack volunteer tracking dashboard using React, Chakra UI, and Node.js used by 5+ managers. Built backend API and schemas using PostgreSQL, Axios, and TypeScript. Optimized case manager table loading latency by 30 sec (from 40 sec) using React.",
+    summary: "Full-stack volunteer tracking dashboard for Collete's Children Home.",
+    details: "Wanting to engage more with the communities at UCI, I joined Commit the Change. This club works to create websites for non-profit organizations. Joining the CHC team, I was tasked to build a full-stack volunteer tracking dashboard using React, Chakra UI, and Node.js. This dashboard was going to be used by managers to track and manage volunteers for the organizations. This was a great experience for me to learn and develop my skills as a developer while also allowing me to find another community at UCI.",
     location: "Commit the Change · Irvine, CA",
   },
   {
@@ -38,7 +36,7 @@ const TIMELINE_ENTRIES = [
     title: "Teacher",
     summary: "Teaching intro to programming in Python and Java.",
     details:
-      "Teaching middle schoolers the introduction to programming in both Python and Java at STEMPiA Computer Institute.",
+      "Wanting to give back to organization that taught me my fundamental programming skills in highschool. I applied to be a teacher, teaching the next generation of programmers. I began to teach middle schoolers the introduction to programming in both Python and Java, preparing them for the future and competitions. This was a great opportunity to strengthen my fundamentals while also helping the next generation of programmers.",
     location: "STEMPiA Computer Institute · Los Angeles, CA",
   },
   {
@@ -47,7 +45,7 @@ const TIMELINE_ENTRIES = [
     title: "Director Of Education",
     summary: "Creating curriculum for new members at Commit the Change.",
     details:
-      "Creating an approachable curriculum in HTML, CSS, TypeScript, and React with the previous Education Director for new incoming members in Fall.",
+      "Enjoying the experience of teaching others, I applied and became the Director of Education for Commit the Change. This role allowed me to create a curriculum for new members to learn and grow their skills. Through this expereince I gave back to the community that truly helped me grow as a developer. Now I get to see the impact I have on the next generation of programmers.",
     location: "Commit the Change · Irvine, CA",
   },
   {
@@ -56,7 +54,7 @@ const TIMELINE_ENTRIES = [
     title: "Software Engineer",
     summary: "Full-stack platform for Celebrating Life CHC.",
     details:
-      "Building a full-stack platform with React and Node.js for Celebrating Life CHC to serve 100+ local patients. Engineered an admin approval flow using Google OAuth and TypeScript APIs, reducing onboarding time by 40%. Developed RESTful CRUD routes for location management in Express, improving data retrieval speed by 25%.",
+      "Coming back as a developer for CTC, I joined CLC team. We are building a full-stack platform with React and Node.js for Celebrating Life CHC to serve 100+ local patients. This was a great opportunity to work with a new team and experience what a senior developer does. Through this experience, I was able to learn and develop my skills as a developer while also helping a local organization grow.",
     location: "Commit the Change · Irvine, CA",
   },
   {
@@ -65,7 +63,7 @@ const TIMELINE_ENTRIES = [
     title: "Technical Lead",
     summary: "Spearheading full-stack development at TENA.",
     details:
-      "Spearheading full-stack development using React and Node.js, managing the technical roadmap for developers. Orchestrating Agile sprint cycles and task delegation. Architected a PostgreSQL JSONB schema for dynamic user configs, meeting 100% of stakeholder requirements.",
+      "Wanting to develop my skills even further, I reached out to company named TENA. I was tasked to spearhead full-stack development using React and Node.js, managing the technical roadmap for developers. I then orchestrated Agile sprint cycles and task delegation while also architecting a PostgreSQL JSONB schema for dynamic user configs, meeting all the requirements of the product. Through this experience, I developed my leadership skills and received a deeper understanding of industry standards.",
     location: "TENA · Los Angeles, CA",
   },
   {
@@ -74,7 +72,7 @@ const TIMELINE_ENTRIES = [
     title: "Research Assistant",
     summary: "Multi-modal perception research at UC Irvine.",
     details:
-      "Researching a multi-modal perception system fusing camera and radar data to improve object detection accuracy. Implementing SOTA deep learning architectures in PyTorch on sensor calibration and spatial feature alignment. Synthesizing academic literature to evaluate model architectures and design experimental robustness benchmarks.",
+      "Wanting to explore AI on a deeper level, I joined a research team focused on multi-modal perception using camera and radar data. Through this experience, I began working with state-of-the-art deep learning architectures in PyTorch, studying how sensor calibration and spatial feature alignment can improve object detection accuracy. I also spent time reading academic papers, evaluating model designs, and helping shape experiments to better understand what makes these systems reliable. This opportunity allowed me to strengthen my technical foundation in AI while learning how research is used to solve complex real-world problems.",
     location: "UC Irvine · Irvine, CA",
   },
   {
@@ -83,16 +81,16 @@ const TIMELINE_ENTRIES = [
     title: "Software Engineer Intern",
     summary: "Building and scaling pet-tech solutions at FiPet.",
     details:
-      "Software Engineering Intern focused on building and scaling pet-tech solutions. Working across the stack to design, build, and iterate on product features, collaborate on system architecture, and improve platform reliability. Responsible for taking small-to-medium engineering tasks from concept to production while working closely with the company's founders.",
+      "Excited to work in a fast-paced startup environment, I joined FiPet as a Software Engineering Intern to help build and scale pet-tech solutions. In this role, I worked across the stack to design, develop, and improve product features while collaborating closely with the founders on both technical decisions and product direction. I was responsible for taking small-to-medium engineering tasks from idea to production, which gave me valuable experience in ownership, iteration, and building reliable systems. Through this experience, I continued to grow as a developer while learning how engineering directly supports product growth in an early-stage company.",
     location: "FiPet · San Francisco Bay Area",
   },
   {
     id: "9",
     date: "Today",
     title: "Today",
-    summary: "",
-    details: "",
-    location: "",
+    summary: "WOW I'M ALMOST DONE WITH SCHOOL!",
+    details: "I continue to develop my skills and look out for new opportunities. I'm looking to continue to build impactful projects and further my skills as a developer.",
+    location: "SOMEWHERE IN THE WORLD",
   },
 ];
 

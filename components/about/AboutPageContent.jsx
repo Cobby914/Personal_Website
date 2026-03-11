@@ -28,7 +28,7 @@ export default function AboutPageContent() {
               className="mt-4 max-w-2xl mx-auto text-lg text-white/90 sm:text-xl"
               style={{ textShadow: textShadowSoft }}
             >
-              Developer passionate about building full-stack applications and AI systems that solve real-world problems.
+              Learn more about me and my experience.
             </p>
           </div>
         </AnimateOnScroll>
@@ -62,15 +62,16 @@ export default function AboutPageContent() {
                 style={{ textShadow: textShadowSoft }}
               >
                 <p>
-                  I&apos;m a software developer focused on AI and full-stack development, 
-                  building systems that turn complex ideas into real, usable products. 
-                  I enjoy working on challenging technical problems and collaborating 
-                  with others to create impactful software. I&apos;m always looking for new opportunities, 
-                  interesting projects, and connecting with other developers.
+                  I&apos;m a developer who enjoys building things that people actually use. 
+                  Always being interested in AI and full-stack development, I used this excitement 
+                  to build my own projects and find opportunities related to it. A lot of what motivates 
+                  me is the process of figuring things out—whether that&apos;s learning a new technology, 
+                  debugging a tough problem, or building something from scratch and watching it come together. 
+                  My hope is to continue to build impactful projects and further my skills as a developer.
                 </p>
                 <p>
-                  Outside of programming, I spend my time playing volleyball, 
-                  training jiu-jitsu, scuba diving, taking photos, and exploring new technologies.
+                  Interestingly outside of programming, I spend my time playing volleyball, 
+                  training jiu-jitsu, scuba diving, and taking photos.
                 </p>
               </div>
             </AnimateOnScroll>
