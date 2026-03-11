@@ -6,6 +6,9 @@ export default function AppShell({
 }) {
   return (
     <main className="relative min-h-screen w-full overflow-x-hidden bg-black">
+      {/* Subtle noise texture on black areas */}
+      <div className="noise-overlay" aria-hidden="true" />
+
       {/* Image - centered with black surrounding it on all sides */}
       {backgroundImage && (
         <>
