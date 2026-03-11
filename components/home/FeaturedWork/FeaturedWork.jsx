@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 
 // Placeholder projects - replace with real data when available
 const PLACEHOLDER_PROJECTS = [
@@ -27,11 +28,12 @@ const PLACEHOLDER_PROJECTS = [
   },
 ];
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, stagger = 0 }) {
   return (
+    <AnimateOnScroll stagger={stagger} as="div" className="flex-shrink-0">
     <Link
       href={project.href}
-      className="group flex min-w-[280px] max-w-[320px] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-white/20 hover:bg-white/10"
+      className="group flex min-w-[280px] max-w-[320px] flex-col overflow-hidden rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition hover:border-white/20 hover:bg-white/10"
     >
       <div className="aspect-video w-full bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center">
         {project.thumbnail ? (
@@ -51,6 +53,7 @@ function ProjectCard({ project }) {
         <p className="text-sm text-white/70 line-clamp-2">{project.description}</p>
       </div>
     </Link>
+    </AnimateOnScroll>
   );
 }
 
@@ -61,6 +64,7 @@ export default function FeaturedWork() {
       className="relative w-full px-6 py-20 sm:px-8 md:py-24"
     >
       <div className="mx-auto max-w-6xl">
+        <AnimateOnScroll>
         <h2
           className="mb-10 text-2xl font-bold text-white sm:text-3xl"
           style={{
@@ -73,8 +77,8 @@ export default function FeaturedWork() {
         {/* Carousel container - horizontal scroll on mobile, centered on desktop */}
         <div className="overflow-x-auto pb-4 scrollbar-hide">
           <div className="flex gap-6 sm:justify-center sm:overflow-visible">
-            {PLACEHOLDER_PROJECTS.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+            {PLACEHOLDER_PROJECTS.map((project, i) => (
+              <ProjectCard key={project.id} project={project} stagger={i * 80} />
             ))}
           </div>
         </div>
@@ -100,6 +104,7 @@ export default function FeaturedWork() {
             </svg>
           </Link>
         </div>
+        </AnimateOnScroll>
       </div>
     </section>
   );

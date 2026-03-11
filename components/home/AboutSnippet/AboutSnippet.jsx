@@ -1,11 +1,14 @@
 "use client";
 
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
+
 export default function AboutSnippet() {
   return (
     <section
       id="about"
       className="relative w-full px-6 py-20 sm:px-8 md:py-24"
     >
+      <AnimateOnScroll>
       <div className="mx-auto max-w-3xl text-center">
         <h2
           className="mb-6 text-2xl font-bold text-white sm:text-3xl"
@@ -28,6 +31,7 @@ export default function AboutSnippet() {
           connecting with fellow developers.
         </p>
       </div>
+      </AnimateOnScroll>
     </section>
   );
 }

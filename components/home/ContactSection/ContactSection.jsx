@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 
 export default function ContactSection() {
   return (
@@ -8,6 +9,7 @@ export default function ContactSection() {
       id="contact"
       className="relative w-full px-6 py-20 sm:px-8 md:py-24"
     >
+      <AnimateOnScroll>
       <div className="mx-auto max-w-2xl text-center">
         <h2
           className="mb-6 text-2xl font-bold text-white sm:text-3xl"
@@ -49,6 +51,7 @@ export default function ContactSection() {
           </svg>
         </Link>
       </div>
+      </AnimateOnScroll>
     </section>
   );
 }
