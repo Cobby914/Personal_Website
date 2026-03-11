@@ -3,37 +3,96 @@
 import { useState } from "react";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 
-// Placeholder timeline entries - replace with your real experiences
-// Use date format: "Month Year" (e.g. "Jan 2025", "Jun 2024")
-// Ordered ascending (oldest first)
+// Experience timeline - ascending order (oldest first)
 // summary: brief info shown by default | details: expanded insight on hover/click
 const TIMELINE_ENTRIES = [
   {
+    id: "0",
+    date: "Sep 2023",
+    title: "Arriving to UCI",
+    summary: "",
+    details: "",
+    location: "UC Irvine · Irvine, CA",
+  },
+  {
     id: "1",
-    date: "Mar 2023",
-    title: "Role or project",
-    summary: "Brief overview of your experience here.",
+    date: "Aug 2024",
+    title: "Software Engineer Intern",
+    summary: "Built mortgage lending tools and dashboards at M.K Lending.",
     details:
-      "Add more insight: key achievements, technologies used, impact, lessons learned. This expanded section appears when hovering or clicking the card.",
-    location: "Location (optional)",
+      "Built a loan-lookup REST API using TypeScript and Node.js, reducing calculations by 4 hours per day. Created a rate-sheet ingestion pipeline with Python, pandas, and PostgreSQL, saving 3 hours of processing. Developed a dashboard tracking employee loans using React and TypeScript for 5+ managers.",
+    location: "M.K Lending · Brea, CA",
   },
   {
     id: "2",
-    date: "Jun 2024",
-    title: "Role or project",
-    summary: "Brief overview of your experience here.",
+    date: "Sep 2024",
+    title: "Software Engineer",
+    summary: "Full-stack volunteer tracking dashboard at Commit the Change.",
     details:
-      "Add more insight: key achievements, technologies used, impact, lessons learned. This expanded section appears when hovering or clicking the card.",
-    location: "Location (optional)",
+      "Developed a full-stack volunteer tracking dashboard using React, Chakra UI, and Node.js used by 5+ managers. Built backend API and schemas using PostgreSQL, Axios, and TypeScript. Optimized case manager table loading latency by 30 sec (from 40 sec) using React.",
+    location: "Commit the Change · Irvine, CA",
   },
   {
     id: "3",
-    date: "Jan 2025",
-    title: "Current role / project",
-    summary: "Brief overview of what you're doing now.",
+    date: "May 2025",
+    title: "Teacher",
+    summary: "Teaching intro to programming in Python and Java.",
     details:
-      "Add more insight: key achievements, technologies used, impact, lessons learned. This expanded section appears when hovering or clicking the card.",
-    location: "Location (optional)",
+      "Teaching middle schoolers the introduction to programming in both Python and Java at STEMPiA Computer Institute.",
+    location: "STEMPiA Computer Institute · Los Angeles, CA",
+  },
+  {
+    id: "4",
+    date: "May 2025",
+    title: "Director Of Education",
+    summary: "Creating curriculum for new members at Commit the Change.",
+    details:
+      "Creating an approachable curriculum in HTML, CSS, TypeScript, and React with the previous Education Director for new incoming members in Fall.",
+    location: "Commit the Change · Irvine, CA",
+  },
+  {
+    id: "5",
+    date: "Sep 2025",
+    title: "Software Engineer",
+    summary: "Full-stack platform for Celebrating Life CHC.",
+    details:
+      "Building a full-stack platform with React and Node.js for Celebrating Life CHC to serve 100+ local patients. Engineered an admin approval flow using Google OAuth and TypeScript APIs, reducing onboarding time by 40%. Developed RESTful CRUD routes for location management in Express, improving data retrieval speed by 25%.",
+    location: "Commit the Change · Irvine, CA",
+  },
+  {
+    id: "6",
+    date: "Dec 2025",
+    title: "Technical Lead",
+    summary: "Spearheading full-stack development at TENA.",
+    details:
+      "Spearheading full-stack development using React and Node.js, managing the technical roadmap for developers. Orchestrating Agile sprint cycles and task delegation. Architected a PostgreSQL JSONB schema for dynamic user configs, meeting 100% of stakeholder requirements.",
+    location: "TENA · Los Angeles, CA",
+  },
+  {
+    id: "7",
+    date: "Dec 2025",
+    title: "Research Assistant",
+    summary: "Multi-modal perception research at UC Irvine.",
+    details:
+      "Researching a multi-modal perception system fusing camera and radar data to improve object detection accuracy. Implementing SOTA deep learning architectures in PyTorch on sensor calibration and spatial feature alignment. Synthesizing academic literature to evaluate model architectures and design experimental robustness benchmarks.",
+    location: "UC Irvine · Irvine, CA",
+  },
+  {
+    id: "8",
+    date: "Jan 2026",
+    title: "Software Engineer Intern",
+    summary: "Building and scaling pet-tech solutions at FiPet.",
+    details:
+      "Software Engineering Intern focused on building and scaling pet-tech solutions. Working across the stack to design, build, and iterate on product features, collaborate on system architecture, and improve platform reliability. Responsible for taking small-to-medium engineering tasks from concept to production while working closely with the company's founders.",
+    location: "FiPet · San Francisco Bay Area",
+  },
+  {
+    id: "9",
+    date: "Today",
+    title: "Today",
+    summary: "",
+    details: "",
+    location: "",
   },
 ];
 

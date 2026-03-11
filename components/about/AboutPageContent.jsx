@@ -87,7 +87,7 @@ export default function AboutPageContent() {
         <div className="mx-auto max-w-6xl">
           <AnimateOnScroll>
             <h2
-              className="mb-12 text-2xl font-bold text-white sm:text-3xl"
+              className="mb-12 text-center text-2xl font-bold text-white sm:text-3xl"
               style={{ textShadow }}
             >
               Experience
