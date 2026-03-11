@@ -6,6 +6,7 @@ import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 // Experience timeline - ascending order (oldest first)
 // summary: brief info shown by default | details: expanded insight on hover/click
 const TIMELINE_ENTRIES = [
+  { type: "separator", label: "First Year" },
   {
     id: "0",
     date: "Sep 2023",
@@ -22,6 +23,7 @@ const TIMELINE_ENTRIES = [
     details: "Landing my first internship, I was able to learn from the best and build tools that helped the company grow. Working with a team, I was tasked to help develop a loan-lookup REST API using TypeScript and Node.js. Continuing my internship with this company, I then built a rate-sheet ingestion pipeline with Python, pandas, and PostgresSQL. Finally, I implemented a dashboard tracking employee loans using React and TypeScript as my last project. This was a great experience for me to learn and develop my skills as a developer.",
     location: "M.K Lending · Brea, CA",
   },
+  { type: "separator", label: "Second Year" },
   {
     id: "2",
     date: "Sep 2024",
@@ -48,6 +50,7 @@ const TIMELINE_ENTRIES = [
       "Enjoying the experience of teaching others, I applied and became the Director of Education for Commit the Change. This role allowed me to create a curriculum for new members to learn and grow their skills. Through this expereince I gave back to the community that truly helped me grow as a developer. Now I get to see the impact I have on the next generation of programmers.",
     location: "Commit the Change · Irvine, CA",
   },
+  { type: "separator", label: "Third Year" },
   {
     id: "5",
     date: "Sep 2025",
@@ -92,9 +95,29 @@ const TIMELINE_ENTRIES = [
     details: "I continue to develop my skills and look out for new opportunities. I'm looking to continue to build impactful projects and further my skills as a developer.",
     location: "SOMEWHERE IN THE WORLD",
   },
+  { type: "separator", label: "Fourth Year" },
 ];
 
 const textShadowSoft = "0 1px 2px rgba(0,0,0,0.6)";
+
+function YearSeparator({ label, index }) {
+  return (
+    <AnimateOnScroll stagger={index * 40} as="div">
+      <div className="relative flex items-center justify-center py-8 md:py-10">
+        <div className="relative z-10 flex items-center gap-4">
+          <div className="h-px w-12 bg-white/30 md:w-16" aria-hidden />
+          <span
+            className="text-sm font-semibold uppercase tracking-wider text-white/70 md:text-base"
+            style={{ textShadow: textShadowSoft }}
+          >
+            {label}
+          </span>
+          <div className="h-px w-12 bg-white/30 md:w-16" aria-hidden />
+        </div>
+      </div>
+    </AnimateOnScroll>
+  );
+}
 
 function TimelineCard({ entry, isRight, index }) {
   const [isPinned, setIsPinned] = useState(false);
@@ -220,14 +243,20 @@ export default function ExperienceTimeline() {
       />
 
       <div className="space-y-0">
-        {TIMELINE_ENTRIES.map((entry, i) => (
-          <TimelineCard
-            key={entry.id}
-            entry={entry}
-            isRight={i % 2 === 0}
-            index={i}
-          />
-        ))}
+        {TIMELINE_ENTRIES.map((item, i) => {
+          if (item.type === "separator") {
+            return <YearSeparator key={`sep-${item.label}`} label={item.label} index={i} />;
+          }
+          const entryCount = TIMELINE_ENTRIES.slice(0, i).filter((x) => x.type !== "separator").length;
+          return (
+            <TimelineCard
+              key={item.id}
+              entry={item}
+              isRight={entryCount % 2 === 0}
+              index={i}
+            />
+          );
+        })}
       </div>
     </div>
   );
