@@ -4,6 +4,7 @@ import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 import ScrambleText from "@/components/ui/ScrambleText/ScrambleText";
 import ScrollCue from "@/components/ui/ScrollCue/ScrollCue";
 import ExperienceTimeline from "./ExperienceTimeline";
+import AboutImageCarousel from "./AboutImageCarousel";
 
 const LANDING_IMAGE = "/images/profile-photo.png";
 
@@ -89,6 +90,8 @@ export default function AboutPageContent() {
           </div>
         </div>
       </section>
+
+      <AboutImageCarousel />
 
       {/* Section 3: Experience timeline */}
       <section
