@@ -5,6 +5,7 @@ import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 
 // Experience timeline - ascending order (oldest first)
 // summary: brief info shown by default | details: expanded insight on hover/click
+// image: optional path (e.g. "/images/experience/arriving-uci.jpg") - shown when card is expanded
 const TIMELINE_ENTRIES = [
   { type: "separator", label: "First Year" },
   {
@@ -201,6 +202,15 @@ function TimelineCardContent({ entry, isExpanded, onToggle, onHoverChange, align
         >
           <div className="overflow-hidden">
             <div className="mt-3 border-t border-white/10 pt-3">
+              {entry.image && (
+                <div className="mb-3 aspect-video w-full overflow-hidden rounded-lg">
+                  <img
+                    src={entry.image}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              )}
               <p
                 className="text-sm leading-relaxed text-white/90 md:text-base"
                 style={{ textShadow: textShadowSoft }}
