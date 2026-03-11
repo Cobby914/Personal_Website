@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 
 const ABOUT_CAROUSEL_IMAGES = [
@@ -73,36 +73,79 @@ function getWrappedIndex(index, length) {
 export default function AboutImageCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [missingImages, setMissingImages] = useState({});
+  const [isPaused, setIsPaused] = useState(false);
 
+  const prevIndex = getWrappedIndex(activeIndex - 1, ABOUT_CAROUSEL_IMAGES.length);
+  const nextIndex = getWrappedIndex(activeIndex + 1, ABOUT_CAROUSEL_IMAGES.length);
   const activeSlide = ABOUT_CAROUSEL_IMAGES[activeIndex];
-  const isMissing = Boolean(missingImages[activeSlide.src]);
+  const prevSlide = ABOUT_CAROUSEL_IMAGES[prevIndex];
+  const nextSlide = ABOUT_CAROUSEL_IMAGES[nextIndex];
+
+  function markAsMissing(src) {
+    setMissingImages((prev) => ({ ...prev, [src]: true }));
+  }
+
+  function renderPolaroid(slide, cardClassName = "") {
+    const isMissing = Boolean(missingImages[slide.src]);
+    return (
+      <div
+        className={`flex h-full w-full items-center justify-center rounded-sm bg-white p-3 pb-10 shadow-2xl sm:p-4 sm:pb-12 ${cardClassName}`}
+      >
+        {isMissing ? (
+          <div className="flex h-full w-full flex-col items-center justify-center border border-gray-200 bg-gray-100 px-8 text-center">
+            <p className="text-lg font-semibold text-gray-800">Add your photo here</p>
+            <p className="mt-3 text-sm text-gray-600">{slide.filePath}</p>
+          </div>
+        ) : (
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            className="h-full w-full border border-gray-200 bg-gray-100 object-contain"
+            onError={() => markAsMissing(slide.src)}
+          />
+        )}
+      </div>
+    );
+  }
 
   function goToSlide(index) {
     setActiveIndex(getWrappedIndex(index, ABOUT_CAROUSEL_IMAGES.length));
   }
 
+  useEffect(() => {
+    if (isPaused) return;
+
+    const intervalId = setInterval(() => {
+      setActiveIndex((current) =>
+        getWrappedIndex(current + 1, ABOUT_CAROUSEL_IMAGES.length)
+      );
+    }, 3500);
+
+    return () => clearInterval(intervalId);
+  }, [isPaused]);
+
   return (
     <section className="relative w-full px-6 pb-20 sm:px-8 md:pb-24">
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-4xl">
         <AnimateOnScroll>
 
-          <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-black/35 backdrop-blur-sm">
-            <div className="aspect-[4/3] w-full">
-              {isMissing ? (
-                <div className="flex h-full w-full flex-col items-center justify-center px-8 text-center">
-                  <p className="text-lg font-semibold text-white">Add your photo here</p>
-                  <p className="mt-3 text-sm text-white/80">{activeSlide.filePath}</p>
+          <div
+            className="relative overflow-hidden rounded-2xl border border-white/15 bg-black/35 backdrop-blur-sm"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            <div className="aspect-[4/3] w-full px-4 py-6 sm:px-8 sm:py-8">
+              <div className="relative mx-auto h-full w-full max-w-[760px]">
+                <div className="absolute left-1 top-1/2 z-10 h-[90%] w-[44%] -translate-y-1/2 -rotate-6 opacity-70 sm:left-3">
+                  {renderPolaroid(prevSlide)}
                 </div>
-              ) : (
-                <img
-                  src={activeSlide.src}
-                  alt={activeSlide.alt}
-                  className="h-full w-full object-cover"
-                  onError={() =>
-                    setMissingImages((prev) => ({ ...prev, [activeSlide.src]: true }))
-                  }
-                />
-              )}
+                <div className="absolute right-1 top-1/2 z-10 h-[90%] w-[44%] -translate-y-1/2 rotate-6 opacity-70 sm:right-3">
+                  {renderPolaroid(nextSlide)}
+                </div>
+                <div className="absolute left-1/2 top-1/2 z-20 h-full w-[62%] -translate-x-1/2 -translate-y-1/2">
+                  {renderPolaroid(activeSlide, "ring-1 ring-black/5")}
+                </div>
+              </div>
             </div>
 
             <button
