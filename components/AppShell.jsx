@@ -2,12 +2,15 @@ import AntiqueTVOverlay from "@/components/ui/AntiqueTV/AntiqueTVOverlay";
 
 export default function AppShell({
   backgroundImage,
+  backgroundSize = "contain",
+  backgroundPosition = "center",
+  showNoiseOverlay = true,
   children,
 }) {
   return (
     <main className="relative min-h-screen w-full overflow-x-hidden bg-black">
       {/* Subtle noise texture on black areas */}
-      <div className="noise-overlay" aria-hidden="true" />
+      {showNoiseOverlay && <div className="noise-overlay" aria-hidden="true" />}
 
       {/* Image - centered with black surrounding it on all sides */}
       {backgroundImage && (
@@ -18,7 +21,8 @@ export default function AppShell({
                 className="image-fade-in absolute inset-0 bg-center bg-no-repeat"
                 style={{
                   backgroundImage: `url(${backgroundImage})`,
-                  backgroundSize: "contain",
+                  backgroundSize,
+                  backgroundPosition,
                 }}
               />
               {/* Gradient overlay for readability (over image area) */}
