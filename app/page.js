@@ -1,11 +1,16 @@
 import Link from "next/link";
 import AppShell from "@/components/AppShell";
 import ScrambleText from "@/components/ui/ScrambleText/ScrambleText";
+import ScrollCue from "@/components/ui/ScrollCue/ScrollCue";
+import FeaturedWork from "@/components/home/FeaturedWork/FeaturedWork";
+import AboutSnippet from "@/components/home/AboutSnippet/AboutSnippet";
+import ContactSection from "@/components/home/ContactSection/ContactSection";
 
 export default function HomePage() {
   return (
     <AppShell backgroundImage="/images/background.jpg">
-      <section className="flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center sm:px-8">
+      {/* Hero */}
+      <section className="relative flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center sm:px-8">
         <h1
           className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl"
           style={{
@@ -60,7 +65,17 @@ export default function HomePage() {
             Get in Touch
           </Link>
         </div>
+        <ScrollCue />
       </section>
+
+      {/* Featured Work */}
+      <FeaturedWork />
+
+      {/* About */}
+      <AboutSnippet />
+
+      {/* Contact */}
+      <ContactSection />
     </AppShell>
   );
 }
