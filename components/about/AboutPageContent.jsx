@@ -11,10 +11,10 @@ const textShadowSoft = "0 1px 2px rgba(0,0,0,0.6)";
 export default function AboutPageContent() {
   return (
     <>
-      {/* Section 1: Landing */}
+      {/* Hero section - full viewport so Who I am starts below the image */}
       <section
         id="about-landing"
-        className="relative flex min-h-[70vh] flex-col items-center justify-center px-6 py-24 text-center sm:px-8"
+        className="relative flex min-h-screen shrink-0 flex-col items-center justify-center px-6 py-24 text-center sm:px-8"
       >
         <AnimateOnScroll>
           <div className="mx-auto max-w-4xl">
@@ -34,10 +34,10 @@ export default function AboutPageContent() {
         </AnimateOnScroll>
       </section>
 
-      {/* Section 2: Who I am */}
+      {/* Who I am - transparent to inherit AppShell bg-black + noise overlay */}
       <section
         id="about-who-i-am"
-        className="relative w-full px-6 py-20 sm:px-8 md:py-24"
+        className="relative w-full px-6 pt-16 pb-20 sm:px-8 sm:pt-20 md:pb-24 md:pt-24"
       >
         <div className="mx-auto max-w-5xl">
           <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-12">
