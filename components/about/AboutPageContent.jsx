@@ -22,13 +22,13 @@ export default function AboutPageContent() {
               className="text-3xl font-bold text-white sm:text-4xl md:text-5xl"
               style={{ textShadow }}
             >
-              About Me
+              ABOUT ME
             </h1>
             <p
               className="mt-4 max-w-2xl mx-auto text-lg text-white/90 sm:text-xl"
               style={{ textShadow: textShadowSoft }}
             >
-              Software and AI developer building things for the web.
+              Developer passionate about building full-stack applications and AI systems that solve real-world problems.
             </p>
           </div>
         </AnimateOnScroll>
@@ -62,16 +62,15 @@ export default function AboutPageContent() {
                 style={{ textShadow: textShadowSoft }}
               >
                 <p>
-                  I&apos;m a software developer focused on AI and web development.
-                  I build tools and applications that solve real problems and
-                  delight users. I&apos;m always open to new opportunities—whether
-                  that&apos;s a full-time role, collaboration on interesting
-                  projects, or just connecting with fellow developers.
+                  I&apos;m a software developer focused on AI and full-stack development, 
+                  building systems that turn complex ideas into real, usable products. 
+                  I enjoy working on challenging technical problems and collaborating 
+                  with others to create impactful software. I&apos;m always looking for new opportunities, 
+                  interesting projects, and connecting with other developers.
                 </p>
                 <p>
-                  When I&apos;m not coding, you can find me exploring new
-                  technologies, contributing to open source, or enjoying the great
-                  outdoors.
+                  Outside of programming, I spend my time playing volleyball, 
+                  training jiu-jitsu, scuba diving, and exploring new technologies.
                 </p>
               </div>
             </AnimateOnScroll>
