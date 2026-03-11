@@ -52,6 +52,18 @@ const ABOUT_CAROUSEL_IMAGES = [
     label: "Image 8",
     filePath: "public/images/about-carousel/IMG_4298.jpg",
   },
+  {
+    src: "/images/about-carousel/IMG_5121.jpg",
+    alt: "About carousel image 9",
+    label: "Image 9",
+    filePath: "public/images/about-carousel/IMG_5121.jpg",
+  },
+  {
+    src: "/images/about-carousel/IMG_5573.jpg",
+    alt: "About carousel image 10",
+    label: "Image 10",
+    filePath: "public/images/about-carousel/IMG_5573.jpg",
+  },
 ];
 
 function getWrappedIndex(index, length) {
@@ -71,17 +83,11 @@ export default function AboutImageCarousel() {
 
   return (
     <section className="relative w-full px-6 pb-20 sm:px-8 md:pb-24">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-3xl">
         <AnimateOnScroll>
-          <h2
-            className="mb-6 text-2xl font-bold text-white sm:text-3xl"
-            style={{ textShadow: "0 1px 3px rgba(0,0,0,0.8)" }}
-          >
-            Photo Carousel
-          </h2>
 
           <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-black/35 backdrop-blur-sm">
-            <div className="aspect-[16/10] w-full">
+            <div className="aspect-[4/3] w-full">
               {isMissing ? (
                 <div className="flex h-full w-full flex-col items-center justify-center px-8 text-center">
                   <p className="text-lg font-semibold text-white">Add your photo here</p>
