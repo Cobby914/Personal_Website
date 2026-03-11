@@ -70,7 +70,7 @@ export default function AboutPageContent() {
                 </p>
                 <p>
                   Outside of programming, I spend my time playing volleyball, 
-                  training jiu-jitsu, scuba diving, and exploring new technologies.
+                  training jiu-jitsu, scuba diving, taking photos, and exploring new technologies.
                 </p>
               </div>
             </AnimateOnScroll>
