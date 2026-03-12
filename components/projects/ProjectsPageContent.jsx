@@ -37,6 +37,8 @@ const IN_PROGRESS_PROJECTS = [
     title: "Personal Website (Dec 2025 - Present)",
     summary:
       "Building my personal website with Next.js, React, and Tailwind CSS.",
+    story:
+      "This started as a simple portfolio and gradually turned into a playground for interaction design. I wanted each section to feel personal, so I iterated on transitions, layout rhythm, and storytelling rather than just listing work.",
     tech: ["Next.js", "React", "Tailwind CSS"],
     details: [
       "Developing page-level sections for About, Projects, and Hobbies with shared design patterns.",
@@ -66,6 +68,8 @@ const IN_PROGRESS_PROJECTS = [
     title: "Canvas -> Notion Sync (Feb 2026 - Present)",
     summary:
       "Building an automation tool that syncs Canvas assignments into Notion with deduping, task generation, and scheduled GitHub Actions runs.",
+    story:
+      "I built this to solve my own workflow problem: assignments lived in Canvas, but my planning lived in Notion. Instead of manually moving tasks every week, I automated the sync and added logic that prioritizes what matters first.",
     tech: ["Python", "Canvas API", "Notion API", "GitHub Actions"],
     details: [
       "Fetches upcoming Canvas assignments and syncs them to Notion while preventing duplicate entries.",
@@ -121,6 +125,8 @@ const FINISHED_PROJECTS = [
     title: "Smart Stick",
     summary:
       "Built an assistive smart cane prototype focused on object and elevation detection with cloud-connected capabilities.",
+    story:
+      "This project was driven by accessibility. The goal was not just to detect obstacles, but to design feedback that could be trusted in real-time movement, balancing sensor accuracy with practical user signals.",
     tech: ["C", "PlatformIO", "Arduino", "ESP32", "AWS"],
     details: [
       "Implemented sensor-driven obstacle and elevation detection for safer navigation.",
@@ -492,6 +498,17 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
             </p>
           )}
         </div>
+
+        {project.story && (
+          <div className="mt-6 border-t border-[#d9d1c2] pt-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6a5d4d]">
+              Story
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-[#3a3229]">
+              {project.story}
+            </p>
+          </div>
+        )}
 
         <div className="mt-6 border-t border-[#d9d1c2] pt-5">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6a5d4d]">
