@@ -8,6 +8,13 @@ import ScrollCue from "@/components/ui/ScrollCue/ScrollCue";
 
 const textShadow = "0 1px 3px rgba(0,0,0,0.8)";
 const textShadowSoft = "0 1px 2px rgba(0,0,0,0.6)";
+const MAX_CARD_SUMMARY_WORDS = 50;
+
+function truncateWords(text, maxWords) {
+  const words = text.trim().split(/\s+/);
+  if (words.length <= maxWords) return text;
+  return `${words.slice(0, maxWords).join(" ")}...`;
+}
 
 const PLANNING_PROJECTS = [
   {
@@ -49,20 +56,13 @@ const IN_PROGRESS_PROJECTS = [
   },
   {
     id: "progress-2",
-    title: "UCI Research Assistant (Dec 2025 - Present)",
-    summary:
-      "Researching multimodal camera-radar perception systems and implementing deep learning models for better object detection.",
-    tech: ["PyTorch", "Computer Vision", "Sensor Fusion"],
-  },
-  {
-    id: "progress-3",
     title: "Commit the Change Platform (Sep 2025 - Present)",
     summary:
       "Building a React + Node.js platform for Celebrating Life CHC, including Google OAuth admin approvals and CRUD location APIs.",
     tech: ["React", "Node.js", "TypeScript", "Express"],
   },
   {
-    id: "progress-4",
+    id: "progress-3",
     title: "Canvas -> Notion Sync (Feb 2026 - Present)",
     summary:
       "Building an automation tool that syncs Canvas assignments into Notion with deduping, task generation, and scheduled GitHub Actions runs.",
@@ -137,42 +137,52 @@ const FINISHED_PROJECTS = [
   },
 ];
 
-function ProjectCard({ project, stagger = 0, onOpen }) {
+function ProjectCard({ project, stagger = 0, cardIndex = 0, onOpen }) {
+  const tiltClasses = [
+    "-rotate-[0.9deg]",
+    "rotate-[0.7deg]",
+    "-rotate-[0.5deg]",
+    "rotate-[1deg]",
+  ];
+  const cardSummary = truncateWords(project.summary, MAX_CARD_SUMMARY_WORDS);
+
   return (
     <AnimateOnScroll stagger={stagger} as="article">
       <button
         type="button"
         onClick={(event) => onOpen(project, event.currentTarget.getBoundingClientRect())}
-        className="group h-full w-full rounded-xl border border-white/10 bg-white/5 p-5 text-left shadow-xl backdrop-blur-sm transition duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:border-white/30 hover:bg-white/10 hover:shadow-2xl"
+        className={`group mx-auto w-full max-w-[270px] rounded-[2px] border border-[#d7cfbf] bg-[#f7f3ea] px-3 pt-3 pb-6 text-left shadow-xl transition duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:rotate-0 hover:border-[#c9bfae] hover:bg-[#fbf8f0] hover:shadow-2xl ${tiltClasses[cardIndex % tiltClasses.length]}`}
       >
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="text-xl font-semibold text-white" style={{ textShadow }}>
+        <div className="relative aspect-[4/5] rounded-[1px] border border-[#d5ccbb] bg-[#fefcf7] p-3 shadow-[0_6px_18px_rgba(0,0,0,0.08)]">
+          <div className="flex items-start justify-between gap-4">
+          <h3 className="text-base font-semibold text-[#1f1a14]">
             {project.title}
           </h3>
           <span
-            className="mt-1 inline-block text-sm text-white/80 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            className="mt-1 inline-block text-sm text-[#4b4033] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             aria-hidden="true"
           >
             ↗
           </span>
+          </div>
+          <p
+            className="mt-3 text-sm leading-relaxed text-[#3a3229] line-clamp-5"
+          >
+            {cardSummary}
+          </p>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#fefcf7] to-transparent" />
         </div>
-        <p
-          className="mt-3 text-sm leading-relaxed text-white/85 sm:text-base"
-          style={{ textShadow: textShadowSoft }}
-        >
-          {project.summary}
-        </p>
         <ul className="mt-4 flex flex-wrap gap-2">
           {project.tech.map((item) => (
             <li
               key={item}
-              className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/75"
+              className="rounded-full border border-[#cfc6b5] bg-[#ece6d8] px-3 py-1 text-xs text-[#4b4033]"
             >
               {item}
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-xs uppercase tracking-[0.14em] text-white/65">
+        <p className="mt-4 text-center text-xs uppercase tracking-[0.14em] text-[#6a5d4d]">
           Click to view details
         </p>
       </button>
@@ -198,12 +208,13 @@ function ProjectStatusSection({ id, title, description, projects, onOpenProject 
             {description}
           </p>
         </AnimateOnScroll>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, i) => (
             <ProjectCard
               key={project.id}
               project={project}
               stagger={i * 90}
+              cardIndex={i}
               onOpen={onOpenProject}
             />
           ))}
@@ -428,7 +439,7 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
       />
       <div
         ref={panelRef}
-        className="relative max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-white/20 bg-[#0b0b0b]/95 p-6 text-white shadow-2xl sm:p-8"
+        className="relative max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-md border border-[#d7cfbf] bg-[#f5f1e8] p-6 text-[#1f1a14] shadow-2xl sm:p-8"
         style={{ willChange: "transform, opacity" }}
         onClick={(event) => event.stopPropagation()}
         role="dialog"
@@ -436,21 +447,20 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
         aria-label={`${project.title} details`}
       >
         <div className="flex items-start justify-between gap-4">
-          <h3 className="text-2xl font-bold sm:text-3xl" style={{ textShadow }}>
+          <h3 className="text-2xl font-bold sm:text-3xl">
             {project.title}
           </h3>
           <button
             type="button"
             onClick={handleRequestClose}
-            className="rounded-md border border-white/25 px-3 py-1 text-sm text-white/85 transition hover:bg-white/10"
+            className="rounded-md border border-[#c8bfae] px-3 py-1 text-sm text-[#2a241d] transition hover:bg-black/5"
           >
             Close
           </button>
         </div>
 
         <p
-          className="mt-4 text-sm leading-relaxed text-white/85 sm:text-base"
-          style={{ textShadow: textShadowSoft }}
+          className="mt-4 text-sm leading-relaxed text-[#3a3229] sm:text-base"
         >
           {project.summary}
         </p>
@@ -459,32 +469,32 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
           {project.tech.map((item) => (
             <li
               key={`${project.id}-modal-${item}`}
-              className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/75"
+              className="rounded-full border border-[#cfc6b5] bg-[#ece6d8] px-3 py-1 text-xs text-[#4b4033]"
             >
               {item}
             </li>
           ))}
         </ul>
 
-        <div className="mt-6 border-t border-white/15 pt-5">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">
+        <div className="mt-6 border-t border-[#d9d1c2] pt-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6a5d4d]">
             Details
           </p>
           {project.details?.length ? (
-            <ul className="mt-3 space-y-2 text-sm leading-relaxed text-white/85">
+            <ul className="mt-3 space-y-2 text-sm leading-relaxed text-[#3a3229]">
               {project.details.map((detail) => (
                 <li key={`${project.id}-${detail}`}>- {detail}</li>
               ))}
             </ul>
           ) : (
-            <p className="mt-3 text-sm text-white/75">
+            <p className="mt-3 text-sm text-[#5d5142]">
               More project notes and context will be added soon.
             </p>
           )}
         </div>
 
-        <div className="mt-6 border-t border-white/15 pt-5">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">
+        <div className="mt-6 border-t border-[#d9d1c2] pt-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6a5d4d]">
             Resources
           </p>
           {project.resources?.length ? (
@@ -492,7 +502,7 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
               {project.resources.map((resource) => {
                 const isExternal = resource.href.startsWith("http");
                 const className =
-                  "inline-flex items-center gap-2 rounded-md border border-white/25 px-3 py-1.5 text-xs text-white/85 transition hover:bg-white/10";
+                  "inline-flex items-center gap-2 rounded-md border border-[#c8bfae] bg-[#ece6d8] px-3 py-1.5 text-xs text-[#3f3529] transition hover:bg-[#e3dbc9]";
 
                 if (isExternal) {
                   return (
@@ -518,7 +528,7 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
               })}
             </div>
           ) : (
-            <p className="mt-3 text-sm text-white/70">
+            <p className="mt-3 text-sm text-[#5d5142]">
               No documents or videos added yet.
             </p>
           )}
