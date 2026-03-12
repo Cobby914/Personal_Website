@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 import ScrambleText from "@/components/ui/ScrambleText/ScrambleText";
@@ -116,6 +116,25 @@ const FINISHED_PROJECTS = [
       "Built a student project discovery platform with reusable UI modules and API routes used by 50+ students.",
     tech: ["JavaScript", "TypeScript", "React", "CSS", "PostgreSQL"],
   },
+  {
+    id: "finished-6",
+    title: "Smart Stick",
+    summary:
+      "Built an assistive smart cane prototype focused on object and elevation detection with cloud-connected capabilities.",
+    tech: ["C", "PlatformIO", "Arduino", "ESP32", "AWS"],
+    details: [
+      "Implemented sensor-driven obstacle and elevation detection for safer navigation.",
+      "Designed feedback mechanisms for accessibility-focused guidance and alerts.",
+      "Integrated wireless data handling through ESP32 for cloud-connected functionality.",
+    ],
+    resources: [
+      {
+        label: "GitHub Repository",
+        href: "https://github.com/Cobby914/Smart-Stick",
+        type: "Repository",
+      },
+    ],
+  },
 ];
 
 function ProjectCard({ project, stagger = 0, onOpen }) {
@@ -123,14 +142,17 @@ function ProjectCard({ project, stagger = 0, onOpen }) {
     <AnimateOnScroll stagger={stagger} as="article">
       <button
         type="button"
-        onClick={() => onOpen(project)}
-        className="h-full w-full rounded-xl border border-white/10 bg-white/5 p-5 text-left shadow-xl backdrop-blur-sm transition hover:border-white/25"
+        onClick={(event) => onOpen(project, event.currentTarget.getBoundingClientRect())}
+        className="group h-full w-full rounded-xl border border-white/10 bg-white/5 p-5 text-left shadow-xl backdrop-blur-sm transition duration-300 ease-out hover:-translate-y-1 hover:scale-[1.01] hover:border-white/30 hover:bg-white/10 hover:shadow-2xl"
       >
         <div className="flex items-start justify-between gap-4">
           <h3 className="text-xl font-semibold text-white" style={{ textShadow }}>
             {project.title}
           </h3>
-          <span className="mt-1 inline-block text-sm text-white/80" aria-hidden="true">
+          <span
+            className="mt-1 inline-block text-sm text-white/80 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            aria-hidden="true"
+          >
             ↗
           </span>
         </div>
@@ -191,21 +213,189 @@ function ProjectStatusSection({ id, title, description, projects, onOpenProject 
   );
 }
 
-function ProjectDetailsModal({ project, onClose }) {
+function ProjectDetailsModal({ project, originRect, onClose }) {
+  const OPEN_DURATION_MS = 280;
+  const CLOSE_DURATION_MS = 360;
+  const [isClosing, setIsClosing] = useState(false);
+  const overlayRef = useRef(null);
+  const panelRef = useRef(null);
+  const transitionFxRef = useRef(null);
+  const closeTimerRef = useRef(null);
+
+  const animateTransitionFx = (startRect, endRect, duration, easing) => {
+    const fx = transitionFxRef.current;
+    if (!fx || !startRect || !endRect) return;
+
+    fx.style.display = "block";
+
+    const animation = fx.animate(
+      [
+        {
+          left: `${startRect.left}px`,
+          top: `${startRect.top}px`,
+          width: `${startRect.width}px`,
+          height: `${startRect.height}px`,
+          opacity: 0.46,
+          backgroundPosition: "0% 0%, 100% 0%",
+        },
+        {
+          opacity: 0.28,
+          backgroundPosition: "0% 100%, 100% 100%",
+          offset: 0.62,
+        },
+        {
+          left: `${endRect.left}px`,
+          top: `${endRect.top}px`,
+          width: `${endRect.width}px`,
+          height: `${endRect.height}px`,
+          opacity: 0,
+          backgroundPosition: "0% 0%, 100% 0%",
+        },
+      ],
+      {
+        duration,
+        easing,
+        fill: "forwards",
+      }
+    );
+
+    animation.onfinish = () => {
+      fx.style.display = "none";
+    };
+  };
+
+  const animateFromOrigin = () => {
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    const finalRect = panel.getBoundingClientRect();
+    const dx = originRect.left - finalRect.left;
+    const dy = originRect.top - finalRect.top;
+    const sx = Math.max(0.2, originRect.width / finalRect.width);
+    const sy = Math.max(0.2, originRect.height / finalRect.height);
+
+    panel.animate(
+      [
+        {
+          opacity: 0.25,
+          transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`,
+        },
+        {
+          opacity: 1,
+          transform: "translate(0px, 0px) scale(1, 1)",
+        },
+      ],
+      {
+        duration: OPEN_DURATION_MS,
+        easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+        fill: "both",
+      }
+    );
+
+    if (originRect) {
+      animateTransitionFx(
+        originRect,
+        finalRect,
+        OPEN_DURATION_MS + 80,
+        "cubic-bezier(0.22, 1, 0.36, 1)"
+      );
+    }
+  };
+
+  const animateToOrigin = () => {
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    if (!originRect) {
+      panel.animate(
+        [
+          { opacity: 1, transform: "translate(0px, 0px) scale(1, 1)" },
+          { opacity: 0, transform: "translate(0px, 0px) scale(1, 1)" },
+        ],
+        { duration: CLOSE_DURATION_MS, easing: "ease-in", fill: "forwards" }
+      );
+      return;
+    }
+
+    const finalRect = panel.getBoundingClientRect();
+    const dx = originRect.left - finalRect.left;
+    const dy = originRect.top - finalRect.top;
+    const sx = Math.max(0.2, originRect.width / finalRect.width);
+    const sy = Math.max(0.2, originRect.height / finalRect.height);
+
+    panel.animate(
+      [
+        { opacity: 1, transform: "translate(0px, 0px) scale(1, 1)" },
+        {
+          opacity: 0.25,
+          transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`,
+        },
+      ],
+      {
+        duration: CLOSE_DURATION_MS,
+        easing: "cubic-bezier(0.4, 0, 1, 1)",
+        fill: "forwards",
+      }
+    );
+
+    animateTransitionFx(
+      finalRect,
+      originRect,
+      CLOSE_DURATION_MS,
+      "cubic-bezier(0.4, 0, 1, 1)"
+    );
+  };
+
+  const animateBackdropIn = () => {
+    overlayRef.current?.animate(
+      [{ opacity: 0 }, { opacity: 1 }],
+      { duration: OPEN_DURATION_MS - 60, easing: "ease-out", fill: "both" }
+    );
+  };
+
+  const animateBackdropOut = () => {
+    overlayRef.current?.animate(
+      [{ opacity: 1 }, { opacity: 0 }],
+      { duration: CLOSE_DURATION_MS, easing: "ease-in", fill: "forwards" }
+    );
+  };
+
+  const handleRequestClose = () => {
+    if (!project || isClosing) return;
+    setIsClosing(true);
+
+    animateToOrigin();
+    animateBackdropOut();
+
+    closeTimerRef.current = window.setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, CLOSE_DURATION_MS);
+  };
+
   useEffect(() => {
-    if (!project) return undefined;
+    if (!project) {
+      setIsClosing(false);
+      return undefined;
+    }
 
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
-        onClose();
+        handleRequestClose();
       }
     };
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKeyDown);
+    animateBackdropIn();
+    animateFromOrigin();
 
     return () => {
+      if (closeTimerRef.current) {
+        window.clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+      }
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
@@ -214,13 +404,32 @@ function ProjectDetailsModal({ project, onClose }) {
   if (!project) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-[90] flex items-center justify-center bg-black/75 px-4 py-8 backdrop-blur-sm"
-      onClick={onClose}
-      role="presentation"
-    >
+    <>
       <div
-        className="max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-white/20 bg-[#0b0b0b]/95 p-6 text-white shadow-2xl sm:p-8"
+        ref={overlayRef}
+        className="fixed inset-0 z-[90] flex items-center justify-center bg-black/75 px-4 py-8 backdrop-blur-sm"
+        onClick={handleRequestClose}
+        role="presentation"
+      >
+      <div
+        ref={transitionFxRef}
+        aria-hidden="true"
+        className="pointer-events-none fixed z-[91] hidden rounded-2xl border border-white/35 opacity-0"
+        style={{
+          left: 0,
+          top: 0,
+          width: 0,
+          height: 0,
+          backgroundImage:
+            "linear-gradient(120deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 30%, rgba(255,255,255,0) 65%), repeating-linear-gradient(0deg, rgba(255,255,255,0.26) 0px, rgba(255,255,255,0.26) 1px, rgba(255,255,255,0) 1px, rgba(255,255,255,0) 10px)",
+          backgroundSize: "140% 140%, 100% 100%",
+          mixBlendMode: "screen",
+        }}
+      />
+      <div
+        ref={panelRef}
+        className="relative max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-white/20 bg-[#0b0b0b]/95 p-6 text-white shadow-2xl sm:p-8"
+        style={{ willChange: "transform, opacity" }}
         onClick={(event) => event.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -232,7 +441,7 @@ function ProjectDetailsModal({ project, onClose }) {
           </h3>
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleRequestClose}
             className="rounded-md border border-white/25 px-3 py-1 text-sm text-white/85 transition hover:bg-white/10"
           >
             Close
@@ -315,7 +524,8 @@ function ProjectDetailsModal({ project, onClose }) {
           )}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -361,6 +571,17 @@ function GitHubRevealSection() {
 
 export default function ProjectsPageContent() {
   const [activeProject, setActiveProject] = useState(null);
+  const [modalOriginRect, setModalOriginRect] = useState(null);
+
+  const handleOpenProject = (project, rect) => {
+    setModalOriginRect(rect ? { left: rect.left, top: rect.top, width: rect.width, height: rect.height } : null);
+    setActiveProject(project);
+  };
+
+  const handleCloseProjectModal = () => {
+    setActiveProject(null);
+    setModalOriginRect(null);
+  };
 
   return (
     <>
@@ -400,7 +621,7 @@ export default function ProjectsPageContent() {
         title="Planning"
         description="Ideas and concepts that are currently being researched and scoped."
         projects={PLANNING_PROJECTS}
-        onOpenProject={setActiveProject}
+        onOpenProject={handleOpenProject}
       />
 
       <ProjectStatusSection
@@ -408,7 +629,7 @@ export default function ProjectsPageContent() {
         title="In Progress"
         description="Projects that are actively being built and tested."
         projects={IN_PROGRESS_PROJECTS}
-        onOpenProject={setActiveProject}
+        onOpenProject={handleOpenProject}
       />
 
       <ProjectStatusSection
@@ -416,11 +637,15 @@ export default function ProjectsPageContent() {
         title="Finished"
         description="Completed work that is deployed, documented, or production-ready."
         projects={FINISHED_PROJECTS}
-        onOpenProject={setActiveProject}
+        onOpenProject={handleOpenProject}
       />
 
       <GitHubRevealSection />
-      <ProjectDetailsModal project={activeProject} onClose={() => setActiveProject(null)} />
+      <ProjectDetailsModal
+        project={activeProject}
+        originRect={modalOriginRect}
+        onClose={handleCloseProjectModal}
+      />
     </>
   );
 }
