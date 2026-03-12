@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 import ScrambleText from "@/components/ui/ScrambleText/ScrambleText";
@@ -25,6 +26,21 @@ const PLANNING_PROJECTS = [
 
 const IN_PROGRESS_PROJECTS = [
   {
+    id: "progress-0",
+    title: "Personal Website (Dec 2025 - Present)",
+    summary:
+      "Building my personal website with Next.js, React, and Tailwind CSS.",
+    tech: ["Next.js", "React", "Tailwind CSS"],
+    details: [
+      "Developing page-level sections for About, Projects, and Hobbies with shared design patterns.",
+      "Improving UX through reveal animations, clearer content hierarchy, and responsive layouts.",
+      "Continuously updating project content, routing, and metadata as new work is completed.",
+    ],
+    resources: [
+      { label: "Live Site", href: "/", type: "Demo" },
+    ],
+  },
+  {
     id: "progress-1",
     title: "TENA Technical Lead (Dec 2025 - Present)",
     summary:
@@ -44,6 +60,30 @@ const IN_PROGRESS_PROJECTS = [
     summary:
       "Building a React + Node.js platform for Celebrating Life CHC, including Google OAuth admin approvals and CRUD location APIs.",
     tech: ["React", "Node.js", "TypeScript", "Express"],
+  },
+  {
+    id: "progress-4",
+    title: "Canvas -> Notion Sync (Feb 2026 - Present)",
+    summary:
+      "Building an automation tool that syncs Canvas assignments into Notion with deduping, task generation, and scheduled GitHub Actions runs.",
+    tech: ["Python", "Canvas API", "Notion API", "GitHub Actions"],
+    details: [
+      "Fetches upcoming Canvas assignments and syncs them to Notion while preventing duplicate entries.",
+      "Generates task tracker items with automatic priority and effort scoring based on due dates and points.",
+      "Runs automatically through GitHub Actions with secure environment-based credentials.",
+    ],
+    resources: [
+      {
+        label: "GitHub Repository",
+        href: "https://github.com/Cobby914/CanvasNotionSync",
+        type: "Repository",
+      },
+      {
+        label: "Project README",
+        href: "https://github.com/Cobby914/CanvasNotionSync#readme",
+        type: "Document",
+      },
+    ],
   },
 ];
 
@@ -78,13 +118,22 @@ const FINISHED_PROJECTS = [
   },
 ];
 
-function ProjectCard({ project, stagger = 0 }) {
+function ProjectCard({ project, stagger = 0, onOpen }) {
   return (
     <AnimateOnScroll stagger={stagger} as="article">
-      <div className="h-full rounded-xl border border-white/10 bg-white/5 p-5 shadow-xl backdrop-blur-sm">
-        <h3 className="text-xl font-semibold text-white" style={{ textShadow }}>
-          {project.title}
-        </h3>
+      <button
+        type="button"
+        onClick={() => onOpen(project)}
+        className="h-full w-full rounded-xl border border-white/10 bg-white/5 p-5 text-left shadow-xl backdrop-blur-sm transition hover:border-white/25"
+      >
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="text-xl font-semibold text-white" style={{ textShadow }}>
+            {project.title}
+          </h3>
+          <span className="mt-1 inline-block text-sm text-white/80" aria-hidden="true">
+            ↗
+          </span>
+        </div>
         <p
           className="mt-3 text-sm leading-relaxed text-white/85 sm:text-base"
           style={{ textShadow: textShadowSoft }}
@@ -101,12 +150,15 @@ function ProjectCard({ project, stagger = 0 }) {
             </li>
           ))}
         </ul>
-      </div>
+        <p className="mt-4 text-xs uppercase tracking-[0.14em] text-white/65">
+          Click to view details
+        </p>
+      </button>
     </AnimateOnScroll>
   );
 }
 
-function ProjectStatusSection({ id, title, description, projects }) {
+function ProjectStatusSection({ id, title, description, projects, onOpenProject }) {
   return (
     <section id={id} className="relative w-full px-6 py-20 sm:px-8 md:py-24">
       <div className="mx-auto max-w-6xl">
@@ -126,11 +178,144 @@ function ProjectStatusSection({ id, title, description, projects }) {
         </AnimateOnScroll>
         <div className="grid gap-6 md:grid-cols-2">
           {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} stagger={i * 90} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              stagger={i * 90}
+              onOpen={onOpenProject}
+            />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function ProjectDetailsModal({ project, onClose }) {
+  useEffect(() => {
+    if (!project) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [project, onClose]);
+
+  if (!project) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[90] flex items-center justify-center bg-black/75 px-4 py-8 backdrop-blur-sm"
+      onClick={onClose}
+      role="presentation"
+    >
+      <div
+        className="max-h-[85vh] w-full max-w-3xl overflow-y-auto rounded-2xl border border-white/20 bg-[#0b0b0b]/95 p-6 text-white shadow-2xl sm:p-8"
+        onClick={(event) => event.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${project.title} details`}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <h3 className="text-2xl font-bold sm:text-3xl" style={{ textShadow }}>
+            {project.title}
+          </h3>
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-md border border-white/25 px-3 py-1 text-sm text-white/85 transition hover:bg-white/10"
+          >
+            Close
+          </button>
+        </div>
+
+        <p
+          className="mt-4 text-sm leading-relaxed text-white/85 sm:text-base"
+          style={{ textShadow: textShadowSoft }}
+        >
+          {project.summary}
+        </p>
+
+        <ul className="mt-4 flex flex-wrap gap-2">
+          {project.tech.map((item) => (
+            <li
+              key={`${project.id}-modal-${item}`}
+              className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/75"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-6 border-t border-white/15 pt-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">
+            Details
+          </p>
+          {project.details?.length ? (
+            <ul className="mt-3 space-y-2 text-sm leading-relaxed text-white/85">
+              {project.details.map((detail) => (
+                <li key={`${project.id}-${detail}`}>- {detail}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-3 text-sm text-white/75">
+              More project notes and context will be added soon.
+            </p>
+          )}
+        </div>
+
+        <div className="mt-6 border-t border-white/15 pt-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">
+            Resources
+          </p>
+          {project.resources?.length ? (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {project.resources.map((resource) => {
+                const isExternal = resource.href.startsWith("http");
+                const className =
+                  "inline-flex items-center gap-2 rounded-md border border-white/25 px-3 py-1.5 text-xs text-white/85 transition hover:bg-white/10";
+
+                if (isExternal) {
+                  return (
+                    <a
+                      key={`${project.id}-${resource.label}`}
+                      href={resource.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={className}
+                    >
+                      <span>{resource.type}:</span>
+                      <span>{resource.label}</span>
+                    </a>
+                  );
+                }
+
+                return (
+                  <Link key={`${project.id}-${resource.label}`} href={resource.href} className={className}>
+                    <span>{resource.type}:</span>
+                    <span>{resource.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="mt-3 text-sm text-white/70">
+              No documents or videos added yet.
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -175,6 +360,8 @@ function GitHubRevealSection() {
 }
 
 export default function ProjectsPageContent() {
+  const [activeProject, setActiveProject] = useState(null);
+
   return (
     <>
       <section
@@ -213,6 +400,7 @@ export default function ProjectsPageContent() {
         title="Planning"
         description="Ideas and concepts that are currently being researched and scoped."
         projects={PLANNING_PROJECTS}
+        onOpenProject={setActiveProject}
       />
 
       <ProjectStatusSection
@@ -220,6 +408,7 @@ export default function ProjectsPageContent() {
         title="In Progress"
         description="Projects that are actively being built and tested."
         projects={IN_PROGRESS_PROJECTS}
+        onOpenProject={setActiveProject}
       />
 
       <ProjectStatusSection
@@ -227,9 +416,11 @@ export default function ProjectsPageContent() {
         title="Finished"
         description="Completed work that is deployed, documented, or production-ready."
         projects={FINISHED_PROJECTS}
+        onOpenProject={setActiveProject}
       />
 
       <GitHubRevealSection />
+      <ProjectDetailsModal project={activeProject} onClose={() => setActiveProject(null)} />
     </>
   );
 }
