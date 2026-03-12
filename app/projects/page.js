@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function ProjectsPage() {
   return (
-    <AppShell backgroundImage="/images/about-background.png">
+    <AppShell backgroundImage="/images/projects-hero-background.png">
       <ProjectsPageContent />
     </AppShell>
   );
