@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 
 export default function AboutSnippet() {
@@ -30,6 +31,28 @@ export default function AboutSnippet() {
           full-time role, collaboration on interesting projects, or just
           connecting with fellow developers.
         </p>
+        <Link
+          href="/about"
+          className="mt-8 inline-flex items-center gap-2 rounded-lg border-2 border-white px-8 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
+          style={{
+            textShadow: "0 1px 3px rgba(0,0,0,0.8)",
+          }}
+        >
+          More about me
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </Link>
       </div>
       </AnimateOnScroll>
     </section>
