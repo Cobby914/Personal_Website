@@ -285,6 +285,21 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
     const panel = panelRef.current;
     if (!panel) return;
 
+    if (!originRect) {
+      panel.animate(
+        [
+          { opacity: 0, transform: "translate(0px, 0px) scale(0.96, 0.96)" },
+          { opacity: 1, transform: "translate(0px, 0px) scale(1, 1)" },
+        ],
+        {
+          duration: OPEN_DURATION_MS,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          fill: "both",
+        }
+      );
+      return;
+    }
+
     const finalRect = panel.getBoundingClientRect();
     const dx = originRect.left - finalRect.left;
     const dy = originRect.top - finalRect.top;
