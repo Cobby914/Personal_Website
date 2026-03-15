@@ -58,7 +58,7 @@ const TIMELINE_ENTRIES = [
     title: "Software Engineer",
     summary: "Full-stack platform for Celebrating Life CHC.",
     details:
-      "Coming back as a developer for CTC, I joined CLC team. We are building a full-stack platform with React and Node.js for Celebrating Life CHC to serve 100+ local patients. This was a great opportunity to work with a new team and experience what a senior developer does. Through this experience, I was able to learn and develop my skills as a developer while also helping a local organization grow.",
+      "Continuing with Commit the Change, I joined another development team working on a platform for Celebrating Life Community Health Center. Similar to last year’s project, we focused on building tools that could directly support the organization’s operations. This time, however, my role within the team had shifted. Rather than being a new developer still learning the tech stack, I returned as a more experienced member of the team. I found myself helping newer developers get adjusted to the tools, development workflow, and project structure. Being in this position allowed me to contribute not only through code, but also by mentoring teammates, answering technical questions, and helping the team maintain steady progress throughout development.",
     location: "Commit the Change · Irvine, CA",
   },
   {
