@@ -35,12 +35,6 @@ function ProjectCard({ project, status, isActive, onClick }) {
           <span className="rounded-full border border-white/25 bg-white/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.14em] text-white/80">
             {status}
           </span>
-          <span
-            className="text-white/50 transition group-hover:text-white/80"
-            aria-hidden="true"
-          >
-            ↗
-          </span>
         </div>
         <h3 className="text-base font-semibold text-white sm:text-lg">{project.title}</h3>
         <p className="mt-2 line-clamp-6 text-sm leading-relaxed text-white/75">
@@ -75,23 +69,62 @@ export default function FeaturedWork() {
     ],
     []
   );
-  const [activeIndex, setActiveIndex] = useState(0);
+  const totalProjects = featuredProjects.length;
+  const loopedProjects = useMemo(() => {
+    if (totalProjects < 2) return featuredProjects;
+    return [
+      featuredProjects[totalProjects - 1],
+      ...featuredProjects,
+      featuredProjects[0],
+    ];
+  }, [featuredProjects, totalProjects]);
+  const [slideIndex, setSlideIndex] = useState(totalProjects > 1 ? 1 : 0);
+  const [isAnimating, setIsAnimating] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const activeIndex =
+    totalProjects > 1 ? (slideIndex - 1 + totalProjects) % totalProjects : 0;
 
   function goToSlide(index) {
-    const total = featuredProjects.length;
-    setActiveIndex((index + total) % total);
+    if (totalProjects < 2) return;
+
+    const targetIndex = (index + totalProjects) % totalProjects;
+    const forwardSteps = (targetIndex - activeIndex + totalProjects) % totalProjects;
+    const backwardSteps = (activeIndex - targetIndex + totalProjects) % totalProjects;
+    const stepDelta = forwardSteps <= backwardSteps ? forwardSteps : -backwardSteps;
+
+    setSlideIndex((current) => current + stepDelta);
   }
 
   useEffect(() => {
-    if (isPaused || featuredProjects.length < 2) return;
+    if (isPaused || totalProjects < 2) return;
 
     const intervalId = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % featuredProjects.length);
+      setSlideIndex((current) => current + 1);
     }, AUTO_ADVANCE_MS);
 
     return () => clearInterval(intervalId);
-  }, [isPaused, featuredProjects.length]);
+  }, [isPaused, totalProjects]);
+
+  function handleTrackTransitionEnd() {
+    if (totalProjects < 2) return;
+
+    if (slideIndex === 0) {
+      setIsAnimating(false);
+      setSlideIndex(totalProjects);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setIsAnimating(true));
+      });
+      return;
+    }
+
+    if (slideIndex === totalProjects + 1) {
+      setIsAnimating(false);
+      setSlideIndex(1);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setIsAnimating(true));
+      });
+    }
+  }
 
   return (
     <section
@@ -117,21 +150,29 @@ export default function FeaturedWork() {
             onBlurCapture={() => setIsPaused(false)}
           >
             <div
-              className="flex transition-transform duration-500 ease-out"
+              className={`flex ${isAnimating ? "transition-transform duration-500 ease-out" : ""}`}
               style={{
-                transform: `translateX(-${activeIndex * 100}%)`,
+                transform: `translateX(-${slideIndex * 100}%)`,
               }}
+              onTransitionEnd={handleTrackTransitionEnd}
             >
-              {featuredProjects.map((project, index) => (
-              <div key={project.id} className="w-full flex-shrink-0 px-0.5 sm:px-1">
+              {loopedProjects.map((project, index) => {
+                const normalizedIndex =
+                  totalProjects > 1
+                    ? (index - 1 + totalProjects) % totalProjects
+                    : index;
+
+                return (
+                <div key={`${project.id}-${index}`} className="w-full flex-shrink-0 px-0.5 sm:px-1">
                   <ProjectCard
                     project={project}
                     status={project.status}
-                    isActive={index === activeIndex}
-                    onClick={() => goToSlide(index)}
+                    isActive={normalizedIndex === activeIndex}
+                    onClick={() => goToSlide(normalizedIndex)}
                   />
                 </div>
-              ))}
+              );
+              })}
             </div>
 
             <button
