@@ -277,13 +277,18 @@ function ProjectStatusSection({ id, title, description, projects, onOpenProject 
 function ProjectDetailsModal({ project, originRect, onClose }) {
   const OPEN_DURATION_MS = 280;
   const CLOSE_DURATION_MS = 360;
+  const RESOURCE_CLOSE_MS = 320;
   const [isClosing, setIsClosing] = useState(false);
   const [activeResource, setActiveResource] = useState(null);
   const [isResourceMaximized, setIsResourceMaximized] = useState(false);
+  const [isResourceClosing, setIsResourceClosing] = useState(false);
+  const [isResourceOpening, setIsResourceOpening] = useState(false);
+  const activeResourceRef = useRef(null);
   const overlayRef = useRef(null);
   const panelRef = useRef(null);
   const transitionFxRef = useRef(null);
   const closeTimerRef = useRef(null);
+  const resourceCloseTimerRef = useRef(null);
 
   const animateTransitionFx = (startRect, endRect, duration, easing) => {
     const fx = transitionFxRef.current;
@@ -451,9 +456,43 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
     }, CLOSE_DURATION_MS);
   };
 
+  const requestCloseResource = () => {
+    if (!activeResourceRef.current || isResourceClosing) return;
+    setIsResourceClosing(true);
+    setIsResourceMaximized(false);
+
+    if (resourceCloseTimerRef.current) {
+      window.clearTimeout(resourceCloseTimerRef.current);
+    }
+
+    resourceCloseTimerRef.current = window.setTimeout(() => {
+      setActiveResource(null);
+      setIsResourceClosing(false);
+      resourceCloseTimerRef.current = null;
+    }, RESOURCE_CLOSE_MS);
+  };
+
+  useEffect(() => {
+    activeResourceRef.current = activeResource;
+  }, [activeResource]);
+
+  useEffect(() => {
+    if (!activeResource || !isResourceOpening) return undefined;
+    const frameId = window.requestAnimationFrame(() => {
+      setIsResourceOpening(false);
+    });
+    return () => window.cancelAnimationFrame(frameId);
+  }, [activeResource, isResourceOpening]);
+
   useEffect(() => {
     setActiveResource(null);
     setIsResourceMaximized(false);
+    setIsResourceClosing(false);
+    setIsResourceOpening(false);
+    if (resourceCloseTimerRef.current) {
+      window.clearTimeout(resourceCloseTimerRef.current);
+      resourceCloseTimerRef.current = null;
+    }
   }, [project?.id]);
 
   useEffect(() => {
@@ -464,9 +503,8 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
 
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
-        if (activeResource) {
-          setActiveResource(null);
-          setIsResourceMaximized(false);
+        if (activeResourceRef.current) {
+          requestCloseResource();
           return;
         }
         handleRequestClose();
@@ -484,10 +522,14 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
         window.clearTimeout(closeTimerRef.current);
         closeTimerRef.current = null;
       }
+      if (resourceCloseTimerRef.current) {
+        window.clearTimeout(resourceCloseTimerRef.current);
+        resourceCloseTimerRef.current = null;
+      }
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [project, onClose, activeResource]);
+  }, [project, onClose]);
 
   if (!project) return null;
 
@@ -616,7 +658,15 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
                     <button
                       key={`${project.id}-${resource.label}`}
                       type="button"
-                      onClick={() => setActiveResource(resource)}
+                      onClick={() => {
+                        if (resourceCloseTimerRef.current) {
+                          window.clearTimeout(resourceCloseTimerRef.current);
+                          resourceCloseTimerRef.current = null;
+                        }
+                        setIsResourceClosing(false);
+                        setIsResourceOpening(!activeResourceRef.current);
+                        setActiveResource(resource);
+                      }}
                       className={`${className} ${isActive ? "border-[#9f9078] bg-[#e3dbc9]" : ""}`}
                     >
                       <span>{resource.type}:</span>
@@ -644,15 +694,16 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
       </div>
       {activeResource && (
         <div
-          className="fixed inset-0 z-[95] flex items-center justify-center bg-black/75 px-4 py-8 backdrop-blur-sm"
-          onClick={() => {
-            setActiveResource(null);
-            setIsResourceMaximized(false);
-          }}
+          className={`fixed inset-0 z-[95] flex items-center justify-center px-4 py-8 backdrop-blur-sm transition-opacity duration-300 ${
+            isResourceClosing || isResourceOpening ? "bg-black/0 opacity-0" : "bg-black/75 opacity-100"
+          }`}
+          onClick={requestCloseResource}
           role="presentation"
         >
           <div
-            className={`relative w-full rounded-md border border-[#d7cfbf] bg-[#f5f1e8] p-4 text-[#1f1a14] shadow-2xl sm:p-5 ${
+            className={`relative w-full rounded-md border border-[#d7cfbf] bg-[#f5f1e8] p-4 text-[#1f1a14] shadow-2xl transition-all duration-300 sm:p-5 ${
+              isResourceClosing || isResourceOpening ? "scale-[0.985] opacity-0" : "scale-100 opacity-100"
+            } ${
               isResourceMaximized ? "h-[96vh] max-w-[96vw]" : "h-[88vh] max-w-5xl"
             }`}
             onClick={(event) => event.stopPropagation()}
@@ -673,10 +724,7 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
                 )}
                 <button
                   type="button"
-                  onClick={() => {
-                    setActiveResource(null);
-                    setIsResourceMaximized(false);
-                  }}
+                  onClick={requestCloseResource}
                   className="rounded-md border border-[#c8bfae] px-2.5 py-1 text-xs text-[#2a241d] transition hover:bg-black/5"
                 >
                   Close
