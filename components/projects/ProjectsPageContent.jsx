@@ -278,6 +278,8 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
   const OPEN_DURATION_MS = 280;
   const CLOSE_DURATION_MS = 360;
   const [isClosing, setIsClosing] = useState(false);
+  const [activeResource, setActiveResource] = useState(null);
+  const [isResourceMaximized, setIsResourceMaximized] = useState(false);
   const overlayRef = useRef(null);
   const panelRef = useRef(null);
   const transitionFxRef = useRef(null);
@@ -450,6 +452,11 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
   };
 
   useEffect(() => {
+    setActiveResource(null);
+    setIsResourceMaximized(false);
+  }, [project?.id]);
+
+  useEffect(() => {
     if (!project) {
       setIsClosing(false);
       return undefined;
@@ -457,6 +464,11 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
 
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
+        if (activeResource) {
+          setActiveResource(null);
+          setIsResourceMaximized(false);
+          return;
+        }
         handleRequestClose();
       }
     };
@@ -475,7 +487,7 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [project, onClose]);
+  }, [project, onClose, activeResource]);
 
   if (!project) return null;
 
@@ -577,6 +589,9 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
             <div className="mt-3 flex flex-wrap gap-2">
               {project.resources.map((resource) => {
                 const isExternal = resource.href.startsWith("http");
+                const isViewableLocalResource =
+                  resource.href.startsWith("/") &&
+                  (resource.type === "Report" || resource.type === "Video");
                 const className =
                   "inline-flex items-center gap-2 rounded-md border border-[#c8bfae] bg-[#ece6d8] px-3 py-1.5 text-xs text-[#3f3529] transition hover:bg-[#e3dbc9]";
 
@@ -595,6 +610,21 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
                   );
                 }
 
+                if (isViewableLocalResource) {
+                  const isActive = activeResource?.href === resource.href;
+                  return (
+                    <button
+                      key={`${project.id}-${resource.label}`}
+                      type="button"
+                      onClick={() => setActiveResource(resource)}
+                      className={`${className} ${isActive ? "border-[#9f9078] bg-[#e3dbc9]" : ""}`}
+                    >
+                      <span>{resource.type}:</span>
+                      <span>{resource.label}</span>
+                    </button>
+                  );
+                }
+
                 return (
                   <Link key={`${project.id}-${resource.label}`} href={resource.href} className={className}>
                     <span>{resource.type}:</span>
@@ -609,8 +639,75 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
             </p>
           )}
         </div>
+
       </div>
       </div>
+      {activeResource && (
+        <div
+          className="fixed inset-0 z-[95] flex items-center justify-center bg-black/75 px-4 py-8 backdrop-blur-sm"
+          onClick={() => {
+            setActiveResource(null);
+            setIsResourceMaximized(false);
+          }}
+          role="presentation"
+        >
+          <div
+            className={`relative w-full rounded-md border border-[#d7cfbf] bg-[#f5f1e8] p-4 text-[#1f1a14] shadow-2xl sm:p-5 ${
+              isResourceMaximized ? "h-[96vh] max-w-[96vw]" : "h-[88vh] max-w-5xl"
+            }`}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6a5d4d]">
+                {activeResource.type}: {activeResource.label}
+              </p>
+              <div className="flex items-center gap-2">
+                {activeResource.type === "Report" && (
+                  <button
+                    type="button"
+                    onClick={() => setIsResourceMaximized((previous) => !previous)}
+                    className="rounded-md border border-[#c8bfae] px-2.5 py-1 text-xs text-[#2a241d] transition hover:bg-black/5"
+                  >
+                    {isResourceMaximized ? "Restore" : "Maximize"}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveResource(null);
+                    setIsResourceMaximized(false);
+                  }}
+                  className="rounded-md border border-[#c8bfae] px-2.5 py-1 text-xs text-[#2a241d] transition hover:bg-black/5"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+
+            {activeResource.type === "Video" ? (
+              <video
+                className={`w-full rounded-md border border-[#cfc6b5] bg-black ${
+                  isResourceMaximized ? "h-[calc(96vh-64px)]" : "h-[calc(88vh-64px)]"
+                }`}
+                controls
+                controlsList="nodownload noplaybackrate"
+                onContextMenu={(event) => event.preventDefault()}
+              >
+                <source src={activeResource.href} />
+                Your browser does not support video playback.
+              </video>
+            ) : (
+              <iframe
+                title={activeResource.label}
+                src={`${activeResource.href}#toolbar=0&navpanes=0`}
+                className={`w-full rounded-md border border-[#cfc6b5] bg-white ${
+                  isResourceMaximized ? "h-[calc(96vh-64px)]" : "h-[calc(88vh-64px)]"
+                }`}
+              />
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 }
