@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       <body className={`min-h-screen w-full flex flex-col bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 ${ubuntuMono.className}`}>
         <ThemeProvider>
           <Navbar />
-          <div className="flex-1 w-full min-w-0">{children}</div>
+          <div className="flex-1 w-full min-w-0 pt-16">{children}</div>
           <Footer />
         </ThemeProvider>
       </body>
