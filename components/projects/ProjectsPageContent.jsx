@@ -38,7 +38,7 @@ const IN_PROGRESS_PROJECTS = [
     summary:
       "Building my personal website with Next.js, React, and Tailwind CSS.",
     story:
-      "This started as a simple portfolio and gradually turned into a playground for interaction design. I wanted each section to feel personal, so I iterated on transitions, layout rhythm, and storytelling rather than just listing work.",
+      "This started as a simple portfolio and gradually turned into a playground for interaction design. I wanted each section to feel personal, so I spent time iterating on transitions, layout rhythm, and storytelling rather than simply listing my work. Instead of treating the site as a static collection of projects, I approached it as an experience where movement and structure guide the viewer through my journey. Along the way, I experimented with different animations, interaction patterns, and visual pacing to create something that feels both intuitive and engaging. The process taught me how subtle design decisions, like timing, spacing, and responsiveness, can dramatically change how a user perceives and navigates a website.",
     tech: ["Next.js", "React", "Tailwind CSS"],
     details: [
       "Developing page-level sections for About, Projects, and Hobbies with shared design patterns.",
@@ -47,29 +47,20 @@ const IN_PROGRESS_PROJECTS = [
     ],
     resources: [
       { label: "Live Site", href: "/", type: "Demo" },
+      {
+        label: "GitHub Repository",
+        href: "https://github.com/Cobby914/Personal_Website",
+        type: "Repository",
+      },
     ],
   },
   {
     id: "progress-1",
-    title: "TENA Technical Lead (Dec 2025 - Present)",
-    summary:
-      "Leading full-stack development with React and Node.js, managing roadmap execution and agile sprint delivery.",
-    tech: ["React", "Node.js", "PostgreSQL JSONB"],
-  },
-  {
-    id: "progress-2",
-    title: "Commit the Change Platform (Sep 2025 - Present)",
-    summary:
-      "Building a React + Node.js platform for Celebrating Life CHC, including Google OAuth admin approvals and CRUD location APIs.",
-    tech: ["React", "Node.js", "TypeScript", "Express"],
-  },
-  {
-    id: "progress-3",
     title: "Canvas -> Notion Sync (Feb 2026 - Present)",
     summary:
       "Building an automation tool that syncs Canvas assignments into Notion with deduping, task generation, and scheduled GitHub Actions runs.",
     story:
-      "I built this to solve my own workflow problem: assignments lived in Canvas, but my planning lived in Notion. Instead of manually moving tasks every week, I automated the sync and added logic that prioritizes what matters first.",
+      "Realizing I was missing a tool to help me track everything I needed to accomplish throughout the week, I started organizing my tasks in Notion. While moving my personal to-do list was simple, I quickly realized that manually transferring assignments and exams from Canvas into Notion was tedious and time consuming. To streamline this process, I decided to build a Python script that automatically syncs my Canvas assignments with my Notion workspace. The script pulls assignment data from the Canvas API and creates structured entries in my Notion database, allowing me to manage my academic tasks alongside my other responsibilities in a single place. What began as a small convenience project ultimately became a practical automation tool that saves time and keeps my workflow organized.",
     tech: ["Python", "Canvas API", "Notion API", "GitHub Actions"],
     details: [
       "Fetches upcoming Canvas assignments and syncs them to Notion while preventing duplicate entries.",
@@ -93,40 +84,83 @@ const IN_PROGRESS_PROJECTS = [
 
 const FINISHED_PROJECTS = [
   {
-    id: "finished-2",
-    title: "Commit the Change Dashboard (Sep 2024 - Jun 2025)",
-    summary:
-      "Developed a volunteer tracking dashboard and backend APIs, reducing case manager table load times significantly.",
-    tech: ["React", "Chakra UI", "Node.js", "TypeScript", "PostgreSQL"],
-  },
-  {
-    id: "finished-3",
+    id: "finished-1",
     title: "Tumor Classification from Scans (Oct 2025 - Dec 2025)",
     summary:
       "Built and tuned a residual neural network pipeline with strong performance and Grad-CAM based model interpretation.",
-    tech: ["Python", "PyTorch", "Scikit-learn", "Pandas", "Matplotlib"],
+    story:
+      "Wanting to build a project centered around a real-world medical challenge, Margret, Leo, and I began developing a tumor classification network. Using Kaggle’s tumor imaging dataset, we trained several machine learning models to identify and classify tumors based on their features. Rather than committing to a single approach, we experimented with multiple architectures and compared their performance to determine which model best interpreted the tumor data. Through this process, we explored model training, evaluation metrics, and the challenges of working with medical datasets. The project gave us hands-on experience with building and refining machine learning models while tackling a problem with meaningful real-world implications.",
+    details: [
+      "Trained a residual neural network pipeline to classify tumors from medical scans.",
+      "Trained a convolutional neural network pipeline to classify tumors from medical scans.",
+      "Used Grad-CAM to interpret the model's predictions and improve the model's performance.",
+    ],
+    tech: ["Python", "PyTorch", "Scikit-learn", "Pandas", "Matplotlib", "Grad-CAM"],
+    resources: [
+      {
+        label: "GitHub Repository",
+        href: "https://github.com/margoglvz/cs184a-tumors-classification/tree/main",
+        type: "Repository",
+      },
+      {
+        label: "Final Report (PDF)",
+        href: "/resources/Tumor_Classification_Report.pdf",
+        type: "Report",
+      },
+    ],
   },
   {
-    id: "finished-4",
+    id: "finished-2",
     title: "Genome Sequencing Pipeline (Oct 2025 - Dec 2025)",
     summary:
-      "Combined Humsavar and dbnsfp5.3a data using DuckDB and pandas, then trained neural models that improved F1 outcomes.",
+      "Built a missense-variant pathogenicity classifier by curating Humsavar + dbNSFP 5.3a data and benchmarking multiple ML models.",
+    story:
+      "To tackle a real-world genomics problem, Keyon, Lex, and I built a classifier to predict whether missense variants are benign or pathogenic. I led dataset curation by parsing Humsavar labels, standardizing classes, excluding uncertain-significance rows, and streaming dbNSFP 5.3a joins by rsID to keep processing memory-safe at chromosome scale. Our final curated dataset contained 10,941 high-quality variants with clinically relevant predictors (SIFT, PolyPhen-2 HDIV, CADD, and REVEL). We benchmarked Naive Bayes, Decision Tree, Random Forest, and XGBoost, and selected XGBoost as the strongest model with ~94% accuracy and strong pathogenic-class recall after class weighting.",
+    details: [
+      "Curated 10,941 high-quality variants by standardizing Humsavar labels and merging dbNSFP 5.3a annotations with rsID-based streaming joins.",
+      "Selected mechanistically meaningful features (SIFT, PolyPhen-2 HDIV, CADD, REVEL) and enforced strict quality checks to remove incomplete genomic records.",
+      "Benchmarked Naive Bayes, Decision Trees, Random Forests, and XGBoost; final weighted XGBoost reached about 94.29% accuracy with improved pathogenic recall.",
+    ],
     tech: ["Python", "DuckDB", "Pandas", "Seaborn", "PyTorch"],
+    resources: [
+      {
+        label: "GitHub Repository",
+        href: "https://github.com/Kyan42/cs178-project",
+        type: "Repository",
+      },
+      {
+        label: "Final Report (PDF)",
+        href: "/resources/Genome_Project_Report.pdf",
+        type: "Report",
+      },
+    ],
   },
   {
-    id: "finished-5",
+    id: "finished-3",
     title: "Reel In Platform (Oct 2024 - May 2025)",
     summary:
       "Built a student project discovery platform with reusable UI modules and API routes used by 50+ students.",
+    story:
+      "Inspired by my team’s own struggle to find projects to join, we decided to build a platform where students could easily discover and participate in ongoing projects. As one of the newer developers on the team, I worked under the guidance of our lead developer, Ethan, learning the project’s architecture and contributing to features across the platform. Through this experience, I gained valuable insight into collaborative development and the process of building a product designed to connect students with opportunities to learn and create.",
+    details: [
+      "Built a student project discovery platform with reusable UI modules and API routes used by 50+ students.",
+      "Implemented a system where project owners could manage their projects and applications.",
+    ],
     tech: ["JavaScript", "TypeScript", "React", "CSS", "PostgreSQL"],
+    resources: [
+      {
+        label: "GitHub Repository",
+        href: "https://github.com/ethanscm/APIHikingSociety",
+        type: "Repository",
+      },
+    ],
   },
   {
-    id: "finished-6",
-    title: "Smart Stick",
+    id: "finished-4",
+    title: "Smart Stick (Oct 2025 - Dec 2025)",
     summary:
       "Built an assistive smart cane prototype focused on object and elevation detection with cloud-connected capabilities.",
-    story:
-      "This project was driven by accessibility. The goal was not just to detect obstacles, but to design feedback that could be trusted in real-time movement, balancing sensor accuracy with practical user signals.",
+    story: "Smart Stick began as an exploration into how embedded systems could be used to improve accessibility. Keyon and I’s goal was to design a smart cane capable of detecting obstacles and elevation changes to assist visually impaired users in navigating their environment more safely. Through this project, we experimented with sensor integration, real-time feedback systems, and cloud connectivity using the ESP32. Building the prototype required us to think carefully about reliability, responsiveness, and how technology can provide intuitive guidance in real-world scenarios.",
     tech: ["C", "PlatformIO", "Arduino", "ESP32", "AWS"],
     details: [
       "Implemented sensor-driven obstacle and elevation detection for safer navigation.",
@@ -138,6 +172,16 @@ const FINISHED_PROJECTS = [
         label: "GitHub Repository",
         href: "https://github.com/Cobby914/Smart-Stick",
         type: "Repository",
+      },
+      {
+        label: "IoT Project Proposal (PDF)",
+        href: "/resources/Smart_Stick_IoT_Proposal.pdf",
+        type: "Report",
+      },
+      {
+        label: "Demo Video",
+        href: "/resources/Smart_Stick_Demo.mp4",
+        type: "Video",
       },
     ],
   },
@@ -233,11 +277,18 @@ function ProjectStatusSection({ id, title, description, projects, onOpenProject 
 function ProjectDetailsModal({ project, originRect, onClose }) {
   const OPEN_DURATION_MS = 280;
   const CLOSE_DURATION_MS = 360;
+  const RESOURCE_CLOSE_MS = 320;
   const [isClosing, setIsClosing] = useState(false);
+  const [activeResource, setActiveResource] = useState(null);
+  const [isResourceMaximized, setIsResourceMaximized] = useState(false);
+  const [isResourceClosing, setIsResourceClosing] = useState(false);
+  const [isResourceOpening, setIsResourceOpening] = useState(false);
+  const activeResourceRef = useRef(null);
   const overlayRef = useRef(null);
   const panelRef = useRef(null);
   const transitionFxRef = useRef(null);
   const closeTimerRef = useRef(null);
+  const resourceCloseTimerRef = useRef(null);
 
   const animateTransitionFx = (startRect, endRect, duration, easing) => {
     const fx = transitionFxRef.current;
@@ -405,6 +456,45 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
     }, CLOSE_DURATION_MS);
   };
 
+  const requestCloseResource = () => {
+    if (!activeResourceRef.current || isResourceClosing) return;
+    setIsResourceClosing(true);
+    setIsResourceMaximized(false);
+
+    if (resourceCloseTimerRef.current) {
+      window.clearTimeout(resourceCloseTimerRef.current);
+    }
+
+    resourceCloseTimerRef.current = window.setTimeout(() => {
+      setActiveResource(null);
+      setIsResourceClosing(false);
+      resourceCloseTimerRef.current = null;
+    }, RESOURCE_CLOSE_MS);
+  };
+
+  useEffect(() => {
+    activeResourceRef.current = activeResource;
+  }, [activeResource]);
+
+  useEffect(() => {
+    if (!activeResource || !isResourceOpening) return undefined;
+    const frameId = window.requestAnimationFrame(() => {
+      setIsResourceOpening(false);
+    });
+    return () => window.cancelAnimationFrame(frameId);
+  }, [activeResource, isResourceOpening]);
+
+  useEffect(() => {
+    setActiveResource(null);
+    setIsResourceMaximized(false);
+    setIsResourceClosing(false);
+    setIsResourceOpening(false);
+    if (resourceCloseTimerRef.current) {
+      window.clearTimeout(resourceCloseTimerRef.current);
+      resourceCloseTimerRef.current = null;
+    }
+  }, [project?.id]);
+
   useEffect(() => {
     if (!project) {
       setIsClosing(false);
@@ -413,6 +503,10 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
 
     const onKeyDown = (event) => {
       if (event.key === "Escape") {
+        if (activeResourceRef.current) {
+          requestCloseResource();
+          return;
+        }
         handleRequestClose();
       }
     };
@@ -427,6 +521,10 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
       if (closeTimerRef.current) {
         window.clearTimeout(closeTimerRef.current);
         closeTimerRef.current = null;
+      }
+      if (resourceCloseTimerRef.current) {
+        window.clearTimeout(resourceCloseTimerRef.current);
+        resourceCloseTimerRef.current = null;
       }
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
@@ -533,6 +631,9 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
             <div className="mt-3 flex flex-wrap gap-2">
               {project.resources.map((resource) => {
                 const isExternal = resource.href.startsWith("http");
+                const isViewableLocalResource =
+                  resource.href.startsWith("/") &&
+                  (resource.type === "Report" || resource.type === "Video");
                 const className =
                   "inline-flex items-center gap-2 rounded-md border border-[#c8bfae] bg-[#ece6d8] px-3 py-1.5 text-xs text-[#3f3529] transition hover:bg-[#e3dbc9]";
 
@@ -551,6 +652,29 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
                   );
                 }
 
+                if (isViewableLocalResource) {
+                  const isActive = activeResource?.href === resource.href;
+                  return (
+                    <button
+                      key={`${project.id}-${resource.label}`}
+                      type="button"
+                      onClick={() => {
+                        if (resourceCloseTimerRef.current) {
+                          window.clearTimeout(resourceCloseTimerRef.current);
+                          resourceCloseTimerRef.current = null;
+                        }
+                        setIsResourceClosing(false);
+                        setIsResourceOpening(!activeResourceRef.current);
+                        setActiveResource(resource);
+                      }}
+                      className={`${className} ${isActive ? "border-[#9f9078] bg-[#e3dbc9]" : ""}`}
+                    >
+                      <span>{resource.type}:</span>
+                      <span>{resource.label}</span>
+                    </button>
+                  );
+                }
+
                 return (
                   <Link key={`${project.id}-${resource.label}`} href={resource.href} className={className}>
                     <span>{resource.type}:</span>
@@ -565,8 +689,73 @@ function ProjectDetailsModal({ project, originRect, onClose }) {
             </p>
           )}
         </div>
+
       </div>
       </div>
+      {activeResource && (
+        <div
+          className={`fixed inset-0 z-[95] flex items-center justify-center px-4 py-8 backdrop-blur-sm transition-opacity duration-300 ${
+            isResourceClosing || isResourceOpening ? "bg-black/0 opacity-0" : "bg-black/75 opacity-100"
+          }`}
+          onClick={requestCloseResource}
+          role="presentation"
+        >
+          <div
+            className={`relative w-full rounded-md border border-[#d7cfbf] bg-[#f5f1e8] p-4 text-[#1f1a14] shadow-2xl transition-all duration-300 sm:p-5 ${
+              isResourceClosing || isResourceOpening ? "scale-[0.985] opacity-0" : "scale-100 opacity-100"
+            } ${
+              isResourceMaximized ? "h-[96vh] max-w-[96vw]" : "h-[88vh] max-w-5xl"
+            }`}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6a5d4d]">
+                {activeResource.type}: {activeResource.label}
+              </p>
+              <div className="flex items-center gap-2">
+                {activeResource.type === "Report" && (
+                  <button
+                    type="button"
+                    onClick={() => setIsResourceMaximized((previous) => !previous)}
+                    className="rounded-md border border-[#c8bfae] px-2.5 py-1 text-xs text-[#2a241d] transition hover:bg-black/5"
+                  >
+                    {isResourceMaximized ? "Restore" : "Maximize"}
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={requestCloseResource}
+                  className="rounded-md border border-[#c8bfae] px-2.5 py-1 text-xs text-[#2a241d] transition hover:bg-black/5"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+
+            {activeResource.type === "Video" ? (
+              <video
+                className={`w-full rounded-md border border-[#cfc6b5] bg-black ${
+                  isResourceMaximized ? "h-[calc(96vh-64px)]" : "h-[calc(88vh-64px)]"
+                }`}
+                controls
+                controlsList="nodownload noplaybackrate"
+                onContextMenu={(event) => event.preventDefault()}
+              >
+                <source src={activeResource.href} />
+                Your browser does not support video playback.
+              </video>
+            ) : (
+              <iframe
+                title={activeResource.label}
+                src={`${activeResource.href}#toolbar=0&navpanes=0`}
+                className={`w-full rounded-md border border-[#cfc6b5] bg-white ${
+                  isResourceMaximized ? "h-[calc(96vh-64px)]" : "h-[calc(88vh-64px)]"
+                }`}
+              />
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 }
