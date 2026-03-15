@@ -1,5 +1,4 @@
-"use client";
-
+import Image from "next/image";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 import { textShadow, textShadowSoft } from "@/components/about/aboutStyles";
 
@@ -15,10 +14,14 @@ export default function AboutWhoIAmSection() {
         <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-12">
           <AnimateOnScroll stagger={0} as="div" className="flex-shrink-0">
             <div className="mx-auto w-full max-w-[280px] overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-xl md:mx-0">
-              <img
+              <Image
                 src={LANDING_IMAGE}
                 alt="Colin Kwon"
+                width={560}
+                height={700}
+                sizes="(max-width: 768px) 280px, 320px"
                 className="aspect-[4/5] w-full object-cover"
+                priority
               />
             </div>
           </AnimateOnScroll>

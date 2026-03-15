@@ -18,11 +18,12 @@ export default function ScrambleText({
   useEffect(() => {
     if (!text || hasAnimated) return;
 
+    let intervalId;
     const startTimeout = setTimeout(() => {
       setIsVisible(true);
       let iteration = 0;
 
-      const interval = setInterval(() => {
+      intervalId = setInterval(() => {
         setDisplayText(
           text
             .split("")
@@ -37,16 +38,17 @@ export default function ScrambleText({
         iteration += 1 / 2;
 
         if (iteration >= text.length) {
-          clearInterval(interval);
+          clearInterval(intervalId);
           setDisplayText(text);
           setHasAnimated(true);
         }
       }, speed);
-
-      return () => clearInterval(interval);
     }, delay);
 
-    return () => clearTimeout(startTimeout);
+    return () => {
+      clearTimeout(startTimeout);
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [text, delay, speed, hasAnimated]);
 
   return (

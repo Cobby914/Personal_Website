@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { textShadowSoft } from "@/components/about/aboutStyles";
 
 export default function TimelineCardContent({
@@ -47,11 +48,14 @@ export default function TimelineCardContent({
           <div className="overflow-hidden">
             <div className="mt-3 border-t border-white/10 pt-3">
               {entry.image && (
-                <div className="mb-3 aspect-video w-full overflow-hidden rounded-lg">
-                  <img
+                <div className="relative mb-3 aspect-video w-full overflow-hidden rounded-lg">
+                  <Image
                     src={entry.image}
                     alt=""
-                    className="h-full w-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 448px"
+                    className="object-cover"
+                    loading="lazy"
                   />
                 </div>
               )}

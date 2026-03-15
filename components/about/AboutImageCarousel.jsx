@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 
 const ABOUT_CAROUSEL_IMAGES = [
@@ -70,6 +71,11 @@ function getWrappedIndex(index, length) {
   return (index + length) % length;
 }
 
+function getCircularDistance(fromIndex, toIndex, length) {
+  const directDistance = Math.abs(toIndex - fromIndex);
+  return Math.min(directDistance, length - directDistance);
+}
+
 const CARD_WIDTH = 240;
 const CARD_GAP = 20;
 
@@ -84,9 +90,13 @@ export default function AboutImageCarousel() {
     setMissingImages((prev) => ({ ...prev, [src]: true }));
   }
 
-  function renderPolaroid(slide, isActive) {
+  function renderPolaroid(slide, isActive, index) {
     const isMissing = Boolean(missingImages[slide.src]);
     const canExpand = !isMissing;
+    const imageCount = ABOUT_CAROUSEL_IMAGES.length;
+    const distanceFromActive = getCircularDistance(index, activeIndex, imageCount);
+    const shouldEagerLoad = distanceFromActive <= 1;
+    const imageQuality = isActive ? 70 : 55;
 
     return (
       <button
@@ -103,12 +113,20 @@ export default function AboutImageCarousel() {
             <p className="mt-3 text-sm text-gray-600">{slide.filePath}</p>
           </div>
         ) : (
-          <img
-            src={slide.src}
-            alt={slide.alt}
-            className="h-full w-full border border-gray-200 bg-gray-100 object-contain"
-            onError={() => markAsMissing(slide.src)}
-          />
+          <div className="relative h-full w-full border border-gray-200 bg-gray-100">
+            <Image
+              src={slide.src}
+              alt={slide.alt}
+              fill
+              sizes="(max-width: 640px) 220px, 240px"
+              className="object-contain"
+              onError={() => markAsMissing(slide.src)}
+              quality={imageQuality}
+              priority={shouldEagerLoad}
+              loading={shouldEagerLoad ? "eager" : "lazy"}
+              fetchPriority={isActive ? "high" : "auto"}
+            />
+          </div>
         )}
       </button>
     );
@@ -163,7 +181,7 @@ export default function AboutImageCarousel() {
                 >
                   {ABOUT_CAROUSEL_IMAGES.map((slide, index) => (
                     <div key={slide.src} className={index === activeIndex ? "photo-pickup-drop" : ""}>
-                      {renderPolaroid(slide, index === activeIndex)}
+                      {renderPolaroid(slide, index === activeIndex, index)}
                     </div>
                   ))}
                 </div>
@@ -224,10 +242,15 @@ export default function AboutImageCarousel() {
                 >
                   Close
                 </button>
-                <img
+                <Image
                   src={expandedSlide.src}
                   alt={expandedSlide.alt}
+                  width={1600}
+                  height={1200}
+                  sizes="100vw"
+                  quality={80}
                   className="max-h-[85vh] w-full rounded-md bg-gray-100 object-contain"
+                  priority
                 />
               </div>
             </div>

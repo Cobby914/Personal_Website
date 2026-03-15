@@ -1,6 +1,5 @@
-"use client";
-
 import Link from "next/link";
+import Image from "next/image";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 
 // Placeholder projects - replace with real data when available
@@ -37,11 +36,16 @@ function ProjectCard({ project, stagger = 0 }) {
     >
       <div className="aspect-video w-full bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center">
         {project.thumbnail ? (
-          <img
-            src={project.thumbnail}
-            alt={project.title}
-            className="h-full w-full object-cover"
-          />
+          <div className="relative h-full w-full">
+            <Image
+              src={project.thumbnail}
+              alt={project.title}
+              fill
+              sizes="(max-width: 640px) 280px, 320px"
+              className="object-cover"
+              loading="lazy"
+            />
+          </div>
         ) : (
           <span className="text-sm text-white/40">No preview yet</span>
         )}
