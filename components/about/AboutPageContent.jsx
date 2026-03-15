@@ -1,5 +1,3 @@
-"use client";
-
 import AboutImageCarousel from "./AboutImageCarousel";
 import AboutHeroSection from "@/components/about/AboutHeroSection";
 import AboutWhoIAmSection from "@/components/about/AboutWhoIAmSection";

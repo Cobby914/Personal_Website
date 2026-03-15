@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 

@@ -1,5 +1,3 @@
-"use client";
-
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll/AnimateOnScroll";
 import ExperienceTimeline from "@/components/about/ExperienceTimeline";
 import { textShadow } from "@/components/about/aboutStyles";

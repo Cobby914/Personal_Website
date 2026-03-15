@@ -1,5 +1,3 @@
-"use client";
-
 import ScrambleText from "@/components/ui/ScrambleText/ScrambleText";
 import ScrollCue from "@/components/ui/ScrollCue/ScrollCue";
 

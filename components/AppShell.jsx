@@ -1,4 +1,5 @@
 import AntiqueTVOverlay from "@/components/ui/AntiqueTV/AntiqueTVOverlay";
+import Image from "next/image";
 
 export default function AppShell({
   backgroundImage,
@@ -18,13 +19,21 @@ export default function AppShell({
           <div className="absolute top-0 left-0 right-0 h-screen flex items-center justify-center px-1.5 pt-8 pb-4 sm:px-2 sm:pt-12 sm:pb-6">
             <div className="relative h-full w-full">
               <div
-                className="image-fade-in absolute inset-0 bg-center bg-no-repeat"
-                style={{
-                  backgroundImage: `url(${backgroundImage})`,
-                  backgroundSize,
-                  backgroundPosition,
-                }}
-              />
+                className="image-fade-in absolute inset-0"
+              >
+                <Image
+                  src={backgroundImage}
+                  alt=""
+                  fill
+                  sizes="100vw"
+                  priority
+                  className="pointer-events-none select-none"
+                  style={{
+                    objectFit: backgroundSize,
+                    objectPosition: backgroundPosition,
+                  }}
+                />
+              </div>
               {/* Gradient overlay for readability (over image area) */}
               <div
                 className="image-fade-in absolute inset-0 pointer-events-none"
